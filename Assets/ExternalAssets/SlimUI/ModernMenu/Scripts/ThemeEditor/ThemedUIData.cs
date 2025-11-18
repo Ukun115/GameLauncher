@@ -1,42 +1,57 @@
 ﻿using UnityEngine;
 
-namespace SlimUI.ModernMenu{
+namespace SlimUI.ModernMenu
+{
 	/// <summary>
-    /// テーマUIデータ
+	/// テーマUIデータ
 	/// CreateAssetMenu　：　Assets/Createメニューに追加
 	/// System.Serializable　：　クラスのインスタンスがシリアライズ可能になる
-    /// </summary>
+	/// </summary>
 	[CreateAssetMenu(menuName = "テーマ設定")]
 	[System.Serializable]
-	public class ThemedUIData : ScriptableObject {
+	public class ThemedUIData : ScriptableObject
+	{
 		/// <summary>
-        /// カスタムプリセット1
-        /// </summary>
+		/// テーマ
+		/// </summary>
+		public enum Theme
+		{
+			Custom1,    // カスタムプリセット1
+			Custom2,    // カスタムプリセット2
+			Custom3     // カスタムプリセット3
+		};
+
+		/// <summary>
+		/// カスタムプリセット1
+		/// </summary>
 		[System.Serializable]
-		public class CustomPreset1{
-			[Header("テキスト")]	
-			public Color Graphic1;
-			public Color32 Text1;
+		public class CustomPreset1
+		{
+			[Header("テキスト")]
+			public Color Graphic;
+			public Color32 Text;
 		}
 
 		/// <summary>
 		/// カスタムプリセット2
 		/// </summary>
 		[System.Serializable]
-		public class CustomPreset2{
-			[Header("テキスト")]	
-			public Color Graphic2;
-			public Color32 Text2;
+		public class CustomPreset2
+		{
+			[Header("テキスト")]
+			public Color Graphic;
+			public Color32 Text;
 		}
 
 		/// <summary>
 		/// カスタムプリセット3
 		/// </summary>
 		[System.Serializable]
-		public class CustomPreset3{
-			[Header("テキスト")]	
-			public Color Graphic3;
-			public Color32 Text3;
+		public class CustomPreset3
+		{
+			[Header("テキスト")]
+			public Color Graphic;
+			public Color32 Text;
 		}
 
 		[Header("プリセット1")]
@@ -53,10 +68,10 @@ namespace SlimUI.ModernMenu{
 		/// </summary>
 		[HideInInspector]
 		public Color CurrentColor;
-		
+
 		/// <summary>
-        /// テキストカラー
-        /// </summary>
+		/// テキストカラー
+		/// </summary>
 		[HideInInspector]
 		public Color32 TextColor;
 	}

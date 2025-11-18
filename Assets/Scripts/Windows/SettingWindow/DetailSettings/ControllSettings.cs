@@ -13,9 +13,6 @@ namespace Lancher
         [Header("マウス反転テキスト"), SerializeField]
         private TMP_Text _invertMouseText;
 
-        [Header("BGMスライダー"), SerializeField]
-        private Slider _BGMSlider;
-
         [Header("感度Xスライダー"), SerializeField]
         private Slider _sensitivityXSlider;
 
@@ -67,8 +64,6 @@ namespace Lancher
         /// </summary>
         private void Init()
         {
-            // BGMスライダー
-            _BGMSlider.value = PlayerPrefs.GetFloat(PlayerPrefsData.BGMVolumeKey);
             // 感度Xスライダー
             _sensitivityXSlider.value = PlayerPrefs.GetFloat(PlayerPrefsData.XSensitivityKey);
             // 感度Yスライダー
@@ -77,15 +72,7 @@ namespace Lancher
             _mouseSmoothSlider.value = PlayerPrefs.GetFloat(PlayerPrefsData.MouseSmoothingKey);
             // マウス反転テキスト
             var isInvertMouse = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsData.InvertedKey));
-            _invertMouseText.text = isInvertMouse ? "on":"off";
-        }
-
-        /// <summary>
-        /// BGM用スライダー
-        /// </summary>
-        public void OnBGMSlider()
-        {
-            PlayerPrefs.SetFloat(PlayerPrefsData.BGMVolumeKey, _BGMSlider.value);
+            _invertMouseText.text = isInvertMouse ? "on" : "off";
         }
 
         /// <summary>
@@ -118,7 +105,7 @@ namespace Lancher
         public void OnInvertMouse()
         {
             var isInvertMouse = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsData.InvertedKey));
-            _invertMouseText.text = isInvertMouse ? "on":"off";
+            _invertMouseText.text = isInvertMouse ? "on" : "off";
         }
     }
 }

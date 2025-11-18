@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 namespace Lancher
 {
@@ -9,6 +10,9 @@ namespace Lancher
     /// </summary>
     public class GameSettings : MonoBehaviour
     {
+        [Header("BGMスライダー"), SerializeField]
+        private Slider _BGMSlider;
+
         [Header("HUD表示テキスト"), SerializeField]
         private TMP_Text _showHudText;
 
@@ -35,6 +39,9 @@ namespace Lancher
         /// </summary>
         private void Init()
         {
+            // BGMスライダー
+            _BGMSlider.value = PlayerPrefs.GetFloat(PlayerPrefsData.BGMVolumeKey);
+
             // 難易度設定に応じたテキスト表示
             var isNormal = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsData.DifficultyKey));
             _difficultyNormalTextLineObj.SetActive(isNormal);
@@ -47,6 +54,14 @@ namespace Lancher
             // ツールチップ表示設定に応じたテキスト表示
             var isToolTips = Convert.ToBoolean(PlayerPrefs.GetInt(PlayerPrefsData.ToolTipsKey));
             _toolTipsText.text = isToolTips ? "on" : "off";
+        }
+
+        /// <summary>
+        /// BGM用スライダー
+        /// </summary>
+        public void OnBGMSlider()
+        {
+            PlayerPrefs.SetFloat(PlayerPrefsData.BGMVolumeKey, _BGMSlider.value);
         }
 
         /// <summary>

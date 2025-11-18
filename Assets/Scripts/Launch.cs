@@ -3,7 +3,7 @@
 namespace Lancher
 {
     /// <summary>
-    /// ランチ
+    /// ゲームをランチする
     /// </summary>
     public class Launch : MonoBehaviour
     {

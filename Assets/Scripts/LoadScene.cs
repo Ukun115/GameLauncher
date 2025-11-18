@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace Lancher
 {
+	/// <summary>
+	/// シーンロード
+	/// </summary>
 	public class LoadScene : MonoBehaviour
 	{
 		[Header("メインキャンバスオブジェクト"), SerializeField]
@@ -43,7 +46,7 @@ namespace Lancher
 		/// 非同期シーンロード
 		/// </summary>
 		/// <param name="sceneName"> ロードするシーン名 </param>
-		public IEnumerator LoadAsynchronously(string sceneName)
+		private IEnumerator LoadAsynchronously(string sceneName)
 		{
 			// シーン非同期ロード
 			AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
