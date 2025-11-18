@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Lancher;
 using SlimUI.ModernMenu;
 using UnityEngine;
@@ -22,6 +23,9 @@ public class MainWindowButtonListener : MonoBehaviour
 
     [Header("カメラマネージャー"), SerializeField]
     private CameraManager _cameraManager;
+
+    [Header("設定ウィンドウオブジェクト"), SerializeField]
+    private GameObject _settingsWindowObj;
 
     [Header("終了ダイアログオブジェクト"), SerializeField]
     private GameObject _exitDialogObj;
@@ -116,7 +120,8 @@ public class MainWindowButtonListener : MonoBehaviour
     public void OnSettingButton()
     {
         HiddenAllWindow();
-        _cameraManager.MoveToPosition2();
+        _settingsWindowObj.SetActive(true);
+        _cameraManager.MoveToPosition2Task().Forget();
     }
 
     /// <summary>

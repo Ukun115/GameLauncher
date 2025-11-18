@@ -6951,7 +6951,7 @@ GameObject:
   - component: {fileID: 393809949271907480}
   - component: {fileID: 352464477946116157}
   m_Layer: 5
-  m_Name: CancleButton
+  m_Name: NoButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10064,7 +10064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &353319855838864052
 GameObject:
   m_ObjectHideFlags: 0
@@ -10610,9 +10610,8 @@ GameObject:
   m_Component:
   - component: {fileID: 575470883494634770}
   - component: {fileID: 573661201320587396}
-  - component: {fileID: 575470883494634771}
   m_Layer: 5
-  m_Name: KeyConfirmationDialog
+  m_Name: KeyConfirmation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11011,7 +11010,7 @@ GameObject:
   - component: {fileID: 393044855195013916}
   - component: {fileID: 353491596059083099}
   m_Layer: 0
-  m_Name: CancleText
+  m_Name: NoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27576,7 +27575,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352456315805213316}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000028312705}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27586,7 +27585,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -108.000046}
+  m_AnchoredPosition: {x: 0.000029763083, y: -108.000046}
   m_SizeDelta: {x: 461, y: 104}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &574967820760081048
@@ -28209,19 +28208,6 @@ RectTransform:
   m_AnchoredPosition: {x: -195, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &575470883494634771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353412522780841472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e4cc2f874144ba4b198c6a8edfbbac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cancelButton: {fileID: 393809949271907480}
 --- !u!224 &575471356473640050
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30280,7 +30266,6 @@ MonoBehaviour:
   _studentProductionsWindowObj: {fileID: 352449583097797446}
   _helpWindowObj: {fileID: 59850696}
   _cameraManager: {fileID: 410749448926685489}
-  _settingsWindowObj: {fileID: 353311199039381234}
   _exitDialogObj: {fileID: 352803723610207180}
 --- !u!224 &575882562806295504
 RectTransform:
@@ -30746,7 +30731,7 @@ RectTransform:
   m_Father: {fileID: 575555568203683984}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -31127,8 +31112,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 576321356555175018}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 8, y: 0}
   m_SizeDelta: {x: 36, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

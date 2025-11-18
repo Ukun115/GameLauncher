@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Lancher
@@ -92,9 +93,10 @@ namespace Lancher
         /// <summary>
         /// 戻るボタン押下時
         /// </summary>
-        public void OnClickReturnButton()
+        public async UniTaskVoid OnClickReturnButton()
         {
-            _cameraManager.MoveToPosition1();
+            await _cameraManager.MoveToPosition1Task();
+            gameObject.SetActive(false);
         }
 
         /// <summary>

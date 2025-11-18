@@ -44,7 +44,8 @@ namespace Lancher
             _gameButton.onClick.AddListener(_buttonListener.OnClickGameButton);
             _controlsButton.onClick.AddListener(_buttonListener.OnClickControlsButton);
             _videoButton.onClick.AddListener(_buttonListener.OnClickVideoButton);
-            _returnButton.onClick.AddListener(_buttonListener.OnClickReturnButton);
+            // NOTE:iseki ラムダ式じゃないとリスナー登録時にOnClickReturnButtonメソッドが呼ばれてしまう
+            _returnButton.onClick.AddListener(() => _buttonListener.OnClickReturnButton().Forget());
             _keyBindingsButton.onClick.AddListener(_buttonListener.OnClickKeyBindingsButton);
         }
     }
