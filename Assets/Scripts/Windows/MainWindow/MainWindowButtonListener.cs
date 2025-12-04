@@ -83,13 +83,9 @@ public class MainWindowButtonListener : MonoBehaviour
     /// </summary>
     public void OnClickStudentProductionsButton()
     {
-        if (_studentProductionsWindowObj.activeSelf)
-        {
-            return;
-        }
-
         HiddenAllWindow();
         _studentProductionsWindowObj.SetActive(true);
+        _cameraManager.MoveToPosition2Task().Forget();
     }
 
     /// <summary>
@@ -136,22 +132,6 @@ public class MainWindowButtonListener : MonoBehaviour
 
         HiddenAllWindow();
         _exitDialogObj.SetActive(true);
-    }
-
-    /// <summary>
-    /// 一覧ボタン押下時
-    /// </summary>
-    public void OnListButton()
-    {
-        // TODO:iseki 一覧Canvas未実装のため未実装
-    }
-
-    /// <summary>
-    /// 検索ボタン押下時
-    /// </summary>
-    public void OnSearchButton()
-    {
-        // TODO:iseki 検索Canvas未実装のため未実装
     }
 
     /// <summary>

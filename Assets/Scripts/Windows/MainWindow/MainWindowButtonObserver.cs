@@ -26,12 +26,6 @@ namespace Lancher
         [Header("終了ボタン"), SerializeField]
         private Button _exitButton;
 
-        [Header("一覧ボタン"), SerializeField]
-        private Button _listButton;
-
-        [Header("検索ボタン"), SerializeField]
-        private Button _searchButton;
-
         [Header("ランチャー説明ボタン"), SerializeField]
         private Button _explanationLancherButton;
 
@@ -64,8 +58,6 @@ namespace Lancher
             _helpButton.onClick.AddListener(_buttonLisner.OnHelpButton);
             _settingButton.onClick.AddListener(_buttonLisner.OnSettingButton);
             _exitButton.onClick.AddListener(_buttonLisner.OnExitButton);
-            _listButton.onClick.AddListener(_buttonLisner.OnListButton);
-            _searchButton.onClick.AddListener(_buttonLisner.OnSearchButton);
             _explanationLancherButton.onClick.AddListener(_buttonLisner.OnExplanationLancherButton);
             _FAQButton.onClick.AddListener(_buttonLisner.OnFAQButton);
             _exitNoButton.onClick.AddListener(_buttonLisner.OnExitNoButton);

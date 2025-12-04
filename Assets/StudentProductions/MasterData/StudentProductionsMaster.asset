@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a417389f147b403c82581e482b13c6e, type: 3}
+  m_Name: StudentProductionsMaster
+  m_EditorClassIdentifier: 
+  entries:
+  - ProductionID: 1
+    GameName: "\u30C6\u30B9\u30C81"
+  - ProductionID: 2
+    GameName: "\u30C6\u30B9\u30C82"
+  - ProductionID: 3
+    GameName: "\u30C6\u30B9\u30C83"
+  - ProductionID: 4
+    GameName: "\u30C6\u30B9\u30C84"
+  - ProductionID: 5
+    GameName: "\u30C6\u30B9\u30C85"
+  - ProductionID: 6
+    GameName: "\u30C6\u30B9\u30C86"
+  - ProductionID: 7
+    GameName: "\u30C6\u30B9\u30C87"
+  - ProductionID: 8
+    GameName: "\u30C6\u30B9\u30C88"
+  - ProductionID: 9
+    GameName: "\u30C6\u30B9\u30C89"
+  - ProductionID: 10
+    GameName: "\u30C6\u30B9\u30C810"
+  - ProductionID: 11
+    GameName: "\u30C6\u30B9\u30C811"
+  - ProductionID: 12
+    GameName: "\u30C6\u30B9\u30C812"
+  - ProductionID: 13
+    GameName: "\u30C6\u30B9\u30C813"
+  - ProductionID: 14
+    GameName: "\u30C6\u30B9\u30C814"
+  - ProductionID: 15
+    GameName: "\u30C6\u30B9\u30C815"
+  - ProductionID: 16
+    GameName: "\u30C6\u30B9\u30C816"
