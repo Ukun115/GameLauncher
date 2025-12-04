@@ -21,7 +21,7 @@ namespace Launcher
         /// <summary>
         /// カメラを指定方向に90°回転して完了までawait（最短経路）
         /// </summary>
-        public async UniTask RotateCameraAsync(RotateDirection direction,float duration = 0.5f)
+        private async UniTask RotateCameraAsync(RotateDirection direction,float duration = 0.5f)
         {
             // 現在角度
             var current = transform.eulerAngles;

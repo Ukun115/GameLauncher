@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace Launcher
 {
     /// <summary>
     /// ゲーム動画セル
     /// </summary>
-    public class GameMovieCell : MonoBehaviour
+    public class GameVideoCell : MonoBehaviour
     {
         [Header("ボタン"), SerializeField]
         private Button _button;
+
+        [Header("ビデオプレイヤー"), SerializeField]
+        private VideoPlayer _videoPlayer;
 
         /// <summary>
         /// Awake
@@ -26,7 +30,15 @@ namespace Launcher
         private void OnClickedButton()
         {
             // ゲームランチャーのインスタンスを取得
-            Launch.Instance.Launching();
+            Launch.Instance.Launching(001);
+        }
+
+        /// <summary>
+        /// 動画クリップ設定
+        /// </summary>
+        public void SetMovie()
+        {
+            _videoPlayer.clip = Resources.Load<VideoClip>($"Videos/Video{gameObject.name}");
         }
     }
 }

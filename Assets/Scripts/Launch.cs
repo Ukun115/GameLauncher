@@ -33,14 +33,14 @@ namespace Launcher
         /// <summary>
         /// ランチング
         /// </summary>
-        public void Launching()
+        public void Launching(int productionNum)
         {
             // .exeパス(フルパス)
             var exePath = Path.GetFullPath(
                 // Assetsフォルダからの相対パスで指定
                 Path.Combine(
                     Application.dataPath,       // Assetsフォルダのパス
-                    "../Builds/001/Game.exe"    // 相対パス
+                    $"../Builds/{productionNum}/Game.exe"    // 相対パス
                 )
             );
 

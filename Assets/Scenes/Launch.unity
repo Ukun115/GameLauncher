@@ -3467,7 +3467,7 @@ RectTransform:
   m_Father: {fileID: 1097971106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5907,7 +5907,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2051543507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6007,6 +6007,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264e8782043a647768a1b7c34e7e6dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buttonListener: {fileID: 2051543512}
+  _returnButton: {fileID: 1302288271}
 --- !u!114 &2051543512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6019,6 +6021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffd67b06f2bb45b1948f529ffb5bf05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraManager: {fileID: 410749448926685489}
 --- !u!1 &2113272737
 GameObject:
   m_ObjectHideFlags: 0
@@ -6129,9 +6132,9 @@ RectTransform:
   m_Father: {fileID: 860455923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -37, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2136599815
 MonoBehaviour:
@@ -10077,7 +10080,6 @@ GameObject:
   - component: {fileID: 575673048786045014}
   - component: {fileID: 330961278694839656}
   - component: {fileID: 339334903322074190}
-  - component: {fileID: 573656923794439528}
   - component: {fileID: 393095572263923582}
   m_Layer: 0
   m_Name: TextureHighText
@@ -10479,7 +10481,6 @@ GameObject:
   - component: {fileID: 576419560452848576}
   - component: {fileID: 330953296180790926}
   - component: {fileID: 338818686775499564}
-  - component: {fileID: 574136703578223250}
   - component: {fileID: 393923849680978942}
   m_Layer: 0
   m_Name: MotionBlurText
@@ -10499,7 +10500,6 @@ GameObject:
   - component: {fileID: 576418198952812260}
   - component: {fileID: 330828290393264700}
   - component: {fileID: 338826287295486764}
-  - component: {fileID: 573536455269730092}
   - component: {fileID: 393504240328010022}
   m_Layer: 0
   m_Name: VSyncText
@@ -10795,7 +10795,6 @@ GameObject:
   - component: {fileID: 575686280922143926}
   - component: {fileID: 330488096108617614}
   - component: {fileID: 339219805493093294}
-  - component: {fileID: 573815560024053962}
   - component: {fileID: 393697160424687652}
   m_Layer: 0
   m_Name: CameraEffectsText
@@ -10849,7 +10848,6 @@ GameObject:
   - component: {fileID: 575741215942347574}
   - component: {fileID: 331408741631910580}
   - component: {fileID: 338746667354248668}
-  - component: {fileID: 574600448530203492}
   - component: {fileID: 393515945105637176}
   m_Layer: 0
   m_Name: AAOffText
@@ -11158,7 +11156,6 @@ GameObject:
   - component: {fileID: 575522736120905714}
   - component: {fileID: 331306128514570820}
   - component: {fileID: 338601222511051654}
-  - component: {fileID: 573698762061593320}
   - component: {fileID: 393635131649856106}
   m_Layer: 0
   m_Name: TextureLowText
@@ -11338,7 +11335,6 @@ GameObject:
   - component: {fileID: 575830076197741308}
   - component: {fileID: 329949622735783908}
   - component: {fileID: 338427293798753876}
-  - component: {fileID: 573848387276817542}
   - component: {fileID: 393086707396612664}
   m_Layer: 0
   m_Name: AA8XText
@@ -11620,7 +11616,6 @@ GameObject:
   - component: {fileID: 575788015825121432}
   - component: {fileID: 330560193841671502}
   - component: {fileID: 338887535407368502}
-  - component: {fileID: 573881828396863126}
   - component: {fileID: 394445092440627334}
   m_Layer: 0
   m_Name: FullScreenText
@@ -12564,7 +12559,6 @@ GameObject:
   m_Component:
   - component: {fileID: 575642253746245448}
   - component: {fileID: 338817694217150512}
-  - component: {fileID: 574046831183736456}
   - component: {fileID: 393819167089203688}
   m_Layer: 0
   m_Name: InvertMouseText
@@ -12755,7 +12749,6 @@ GameObject:
   - component: {fileID: 575557135181995402}
   - component: {fileID: 331389684040974344}
   - component: {fileID: 339382545151892208}
-  - component: {fileID: 573933742754073660}
   - component: {fileID: 394560414322391036}
   m_Layer: 0
   m_Name: TextureMedText
@@ -12876,7 +12869,6 @@ GameObject:
   - component: {fileID: 575424493297902686}
   - component: {fileID: 330666442152464102}
   - component: {fileID: 339389431960545394}
-  - component: {fileID: 573219401465958454}
   - component: {fileID: 394447427200544332}
   m_Layer: 0
   m_Name: ShadowOffText
@@ -12947,7 +12939,6 @@ GameObject:
   - component: {fileID: 575865211952038100}
   - component: {fileID: 330676726336797026}
   - component: {fileID: 338704121040599274}
-  - component: {fileID: 573258818787440834}
   - component: {fileID: 393701414119126232}
   m_Layer: 0
   m_Name: AA2Xtext
@@ -13900,7 +13891,6 @@ GameObject:
   - component: {fileID: 575665049268182856}
   - component: {fileID: 331417238122635702}
   - component: {fileID: 338432015624392752}
-  - component: {fileID: 574580717550475092}
   - component: {fileID: 393885444413132906}
   m_Layer: 0
   m_Name: AA4Xtext
@@ -14409,7 +14399,6 @@ GameObject:
   - component: {fileID: 575611618521326726}
   - component: {fileID: 330627156682895112}
   - component: {fileID: 338675213866365846}
-  - component: {fileID: 574080088846939362}
   - component: {fileID: 393626219816580924}
   m_Layer: 0
   m_Name: ShadowHighText
@@ -14750,7 +14739,6 @@ GameObject:
   - component: {fileID: 575762443502250206}
   - component: {fileID: 330066346791276304}
   - component: {fileID: 339393310846410276}
-  - component: {fileID: 573795522495402808}
   - component: {fileID: 394379127709901612}
   m_Layer: 0
   m_Name: ShadowLowText
@@ -15164,7 +15152,6 @@ GameObject:
   - component: {fileID: 575928359800848798}
   - component: {fileID: 330137100747027308}
   - component: {fileID: 337960540745520228}
-  - component: {fileID: 573510850793276464}
   - component: {fileID: 394350021045155356}
   m_Layer: 0
   m_Name: AmbientOcclusionText
@@ -30241,14 +30228,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353395664056458412}
   m_CullTransparentMesh: 0
---- !u!222 &573219401465958454
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352802331023433110}
-  m_CullTransparentMesh: 0
 --- !u!222 &573221460431426208
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30320,14 +30299,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352872238540861388}
-  m_CullTransparentMesh: 0
---- !u!222 &573258818787440834
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352823704449807914}
   m_CullTransparentMesh: 0
 --- !u!222 &573263272373204572
 CanvasRenderer:
@@ -30425,14 +30396,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353527786294615828}
   m_CullTransparentMesh: 0
---- !u!222 &573510850793276464
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353516331410196746}
-  m_CullTransparentMesh: 0
 --- !u!222 &573513240688531640
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30473,14 +30436,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352026673969146032}
   m_CullTransparentMesh: 0
---- !u!222 &573536455269730092
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352082225139947236}
-  m_CullTransparentMesh: 0
 --- !u!222 &573642238836559272
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30512,14 +30467,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352045729483355820}
-  m_CullTransparentMesh: 0
---- !u!222 &573656923794439528
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351993403923975612}
   m_CullTransparentMesh: 0
 --- !u!222 &573659736366193682
 CanvasRenderer:
@@ -30576,14 +30523,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352646341394448320}
-  m_CullTransparentMesh: 0
---- !u!222 &573698762061593320
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352498798989343050}
   m_CullTransparentMesh: 0
 --- !u!222 &573698822254199190
 CanvasRenderer:
@@ -30673,14 +30612,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353288539218086902}
   m_CullTransparentMesh: 0
---- !u!222 &573795522495402808
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353430328029660328}
-  m_CullTransparentMesh: 0
 --- !u!222 &573806112488849504
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30704,14 +30635,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352790410013190396}
-  m_CullTransparentMesh: 0
---- !u!222 &573815560024053962
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352425327615360824}
   m_CullTransparentMesh: 0
 --- !u!222 &573821826386146254
 CanvasRenderer:
@@ -30761,14 +30684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352905419906580312}
   m_CullTransparentMesh: 0
---- !u!222 &573848387276817542
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352523494741851250}
-  m_CullTransparentMesh: 0
 --- !u!222 &573852036469779118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30800,14 +30715,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353258270443789630}
-  m_CullTransparentMesh: 0
---- !u!222 &573881828396863126
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352552582542877508}
   m_CullTransparentMesh: 0
 --- !u!222 &573885794489367122
 CanvasRenderer:
@@ -30888,14 +30795,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352948100766833300}
-  m_CullTransparentMesh: 0
---- !u!222 &573933742754073660
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352785099308213744}
   m_CullTransparentMesh: 0
 --- !u!222 &573959569197390266
 CanvasRenderer:
@@ -30993,14 +30892,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352952877498871018}
   m_CullTransparentMesh: 0
---- !u!222 &574046831183736456
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352737172787075550}
-  m_CullTransparentMesh: 0
 --- !u!222 &574056192324282128
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31016,14 +30907,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352774332609418714}
-  m_CullTransparentMesh: 0
---- !u!222 &574080088846939362
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353391322502851822}
   m_CullTransparentMesh: 0
 --- !u!222 &574081464382424834
 CanvasRenderer:
@@ -31144,14 +31027,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352714137995399496}
-  m_CullTransparentMesh: 0
---- !u!222 &574136703578223250
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352080120921043112}
   m_CullTransparentMesh: 0
 --- !u!222 &574150024635167196
 CanvasRenderer:
@@ -31318,14 +31193,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352550616646445832}
   m_CullTransparentMesh: 0
---- !u!222 &574580717550475092
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 353280431311755266}
-  m_CullTransparentMesh: 0
 --- !u!222 &574596855912880114
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31341,14 +31208,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 352490119327288910}
-  m_CullTransparentMesh: 0
---- !u!222 &574600448530203492
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352441954071683994}
   m_CullTransparentMesh: 0
 --- !u!222 &574608852021213904
 CanvasRenderer:

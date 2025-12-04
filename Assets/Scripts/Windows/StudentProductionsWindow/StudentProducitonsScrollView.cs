@@ -22,13 +22,17 @@ namespace Launcher
         private void Awake()
         {
             // 登録された学生作品分回す
-            for (var id = 0; id < _masterData.Entries.Count; id++)
+            for (var id = 1; id <= _masterData.Entries.Count; id++)
             {
                 // セル生成
-                Instantiate(
+                var cell = Instantiate(
                     _cell,
                     _contentTransform
                 );
+                // セル名を3桁のIDに設定
+                cell.name = $"{id:D3}";
+                // セルに情報設定
+                cell.GetComponent<GameVideoCell>().SetMovie();
 
                 if (_masterData.TryGet(id, out var entry))
                 {
