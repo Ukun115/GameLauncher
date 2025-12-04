@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// カメラマネージャー
@@ -21,17 +21,17 @@ namespace Lancher
         /// <summary>
         /// カメラを指定方向に90°回転して完了までawait（最短経路）
         /// </summary>
-        public async UniTask RotateCameraAsync(RotateDirection direction, float duration = 0.5f)
+        public async UniTask RotateCameraAsync(RotateDirection direction,float duration = 0.5f)
         {
             // 現在角度
             var current = transform.eulerAngles;
 
             // ±90°で方向決定
             var deltaY = (direction == RotateDirection.Right) ? 90f : -90f;
-            var target = current + new Vector3(0f, deltaY, 0f);
+            var target = current + new Vector3(0f,deltaY,0f);
 
             var tween = transform
-                .DORotate(target, duration, RotateMode.Fast)
+                .DORotate(target,duration,RotateMode.Fast)
                 .SetEase(Ease.OutQuad); // 緩やかに停止
 
             await tween.AsyncWaitForCompletion();

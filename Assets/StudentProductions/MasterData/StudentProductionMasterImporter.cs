@@ -1,9 +1,9 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Linq;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// 学生作品インポーター

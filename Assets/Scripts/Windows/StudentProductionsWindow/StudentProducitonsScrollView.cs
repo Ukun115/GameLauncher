@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// 学生作品群を表示するスクロールビュー

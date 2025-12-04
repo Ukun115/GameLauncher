@@ -1,8 +1,8 @@
-/// <summary>
-/// サウンド定数
-/// </summary>
-namespace Lancher
+﻿namespace Launcher
 {
+    /// <summary>
+    /// サウンド定数
+    /// </summary>
     public static class SoundClipNameConst
     {
         // TODO : iseki

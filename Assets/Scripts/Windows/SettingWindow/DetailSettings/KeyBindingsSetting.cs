@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// キーバインド設定

@@ -1,4 +1,4 @@
-namespace Lancher
+﻿namespace Launcher
 {
     /// <summary>
     /// 学生作品(行)を設定

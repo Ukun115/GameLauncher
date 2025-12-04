@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// ゲーム動画セル
@@ -25,8 +25,8 @@ namespace Lancher
         /// </summary>
         private void OnClickedButton()
         {
-            // ゲームランチ
-            Lancher.Instance.
+            // ゲームランチャーのインスタンスを取得
+            Launch.Instance.Launching();
         }
     }
 }

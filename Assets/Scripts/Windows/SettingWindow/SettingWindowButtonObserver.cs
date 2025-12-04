@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// 設定ウィンドウボタン監視

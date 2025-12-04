@@ -1,5 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class StudentProductionsWindowObserver : MonoBehaviour
+namespace Launcher
 {
+    /// <summary>
+    /// 学生作品ウィンドウ監視
+    /// </summary>
+    public class StudentProductionsWindowObserver : MonoBehaviour
+    {
+    }
 }

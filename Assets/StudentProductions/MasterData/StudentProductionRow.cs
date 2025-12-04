@@ -1,4 +1,4 @@
-namespace Lancher
+﻿namespace Launcher
 {
     /// <summary>
     /// 作成作品(行)

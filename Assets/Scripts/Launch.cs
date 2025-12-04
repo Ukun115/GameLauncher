@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
 using UnityEngine;
+using System.IO;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// ゲームをランチする
@@ -19,7 +20,7 @@ namespace Lancher
         private void Awake()
         {
             // シングルトンチェック
-            if (Instance)
+            if(Instance)
             {
                 Destroy(gameObject);
             }
@@ -34,11 +35,28 @@ namespace Lancher
         /// </summary>
         public void Launching()
         {
-            // .exeパス
-            var exePath = $"{Application.dataPath}/.../Builds/";
+            // .exeパス(フルパス)
+            var exePath = Path.GetFullPath(
+                // Assetsフォルダからの相対パスで指定
+                Path.Combine(
+                    Application.dataPath,       // Assetsフォルダのパス
+                    "../Builds/001/Game.exe"    // 相対パス
+                )
+            );
+
+            // Game.exeがあるフォルダ
+            var exeDir = Path.GetDirectoryName(exePath);
+
+            // プロセス情報設定
+            var processStartInfo = new ProcessStartInfo
+            {
+                FileName = exePath,         // 実行ファイルパス
+                WorkingDirectory = exeDir,  // 作業ディレクトリ
+                UseShellExecute = false     // シェル機能を使用しない
+            };
 
             // .exe実行
-            Process.Start(exePath);
+            Process.Start(processStartInfo);
         }
     }
 }

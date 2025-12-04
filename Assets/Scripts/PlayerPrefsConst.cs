@@ -1,4 +1,4 @@
-namespace Lancher
+﻿namespace Launcher
 {
     /// <summary>
     /// PlayerPrefsデータ

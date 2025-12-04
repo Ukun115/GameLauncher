@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using System;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// ビデオ設定

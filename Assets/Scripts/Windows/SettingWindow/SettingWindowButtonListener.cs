@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// 設定ウィンドウボタンリスナー

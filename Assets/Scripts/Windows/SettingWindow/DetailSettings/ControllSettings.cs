@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
 
-namespace Lancher
+namespace Launcher
 {
     /// <summary>
     /// 操作設定
