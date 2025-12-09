@@ -17,8 +17,9 @@ MonoBehaviour:
     ProductionName: CrazyDelivery
     StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 2
-    ProductionName: "\u30C6\u30B9\u30C82"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: "\u702C\u6238\u5185\u91E3\u308A\u7269\u8A9E"
+    StudentName: "\u6CC9\u7530 \u5E0C\u9F8D(\u30EA\u30FC\u30C0\u30FC)\u3001\u9AD8\u6A4B
+      \u62D3\u4E4B\u3001\u4F0A\u85E4 \u4F91\u751F"
   - ProductionID: 3
     ProductionName: "\u30C6\u30B9\u30C83"
     StudentName: "\u4F50\u7AF9 \u529F"
