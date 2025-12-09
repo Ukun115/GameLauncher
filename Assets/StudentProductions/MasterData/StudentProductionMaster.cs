@@ -14,7 +14,8 @@ namespace Launcher
         public class Entry
         {
             public int ProductionID;
-            public string GameName;
+            public string ProductionName;
+            public string StudentName;
         }
 
         [SerializeField] private List<Entry> entries = new();
@@ -28,7 +29,7 @@ namespace Launcher
             if(rows == null) return;
             foreach(var r in rows)
             {
-                entries.Add(new Entry { ProductionID = r.ProductionID,GameName = r.GameName ?? string.Empty });
+                entries.Add(new Entry { ProductionID = r.ProductionID,StudentName = r.StudentName,ProductionName = r.GameName ?? string.Empty });
             }
             BuildIndex();
         }

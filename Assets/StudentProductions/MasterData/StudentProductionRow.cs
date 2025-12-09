@@ -15,5 +15,10 @@
         /// ゲーム名
         /// </summary>
         public string GameName;
+
+        /// <summary>
+        /// 学生名
+        /// </summary>
+        public string StudentName;
     }
 }

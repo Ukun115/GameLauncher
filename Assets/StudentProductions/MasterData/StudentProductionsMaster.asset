@@ -14,34 +14,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - ProductionID: 1
-    GameName: "\u30C6\u30B9\u30C81"
+    ProductionName: CrazyDelivery
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 2
-    GameName: "\u30C6\u30B9\u30C82"
+    ProductionName: "\u30C6\u30B9\u30C82"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 3
-    GameName: "\u30C6\u30B9\u30C83"
+    ProductionName: "\u30C6\u30B9\u30C83"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 4
-    GameName: "\u30C6\u30B9\u30C84"
+    ProductionName: "\u30C6\u30B9\u30C84"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 5
-    GameName: "\u30C6\u30B9\u30C85"
+    ProductionName: "\u30C6\u30B9\u30C85"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 6
-    GameName: "\u30C6\u30B9\u30C86"
+    ProductionName: "\u30C6\u30B9\u30C86"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 7
-    GameName: "\u30C6\u30B9\u30C87"
+    ProductionName: "\u30C6\u30B9\u30C87"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 8
-    GameName: "\u30C6\u30B9\u30C88"
+    ProductionName: "\u30C6\u30B9\u30C88"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 9
-    GameName: "\u30C6\u30B9\u30C89"
+    ProductionName: "\u30C6\u30B9\u30C89"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 10
-    GameName: "\u30C6\u30B9\u30C810"
+    ProductionName: "\u30C6\u30B9\u30C810"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 11
-    GameName: "\u30C6\u30B9\u30C811"
+    ProductionName: "\u30C6\u30B9\u30C811"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 12
-    GameName: "\u30C6\u30B9\u30C812"
+    ProductionName: "\u30C6\u30B9\u30C812"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 13
-    GameName: "\u30C6\u30B9\u30C813"
+    ProductionName: "\u30C6\u30B9\u30C813"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 14
-    GameName: "\u30C6\u30B9\u30C814"
+    ProductionName: "\u30C6\u30B9\u30C814"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 15
-    GameName: "\u30C6\u30B9\u30C815"
+    ProductionName: "\u30C6\u30B9\u30C815"
+    StudentName: "\u4F50\u7AF9 \u529F"
   - ProductionID: 16
-    GameName: "\u30C6\u30B9\u30C816"
+    ProductionName: "\u30C6\u30B9\u30C816"
+    StudentName: "\u4F50\u7AF9 \u529F"

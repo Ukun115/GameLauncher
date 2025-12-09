@@ -22,7 +22,7 @@ namespace Launcher
         private void Awake()
         {
             // 登録された学生作品分回す
-            for (var id = 1; id <= _masterData.Entries.Count; id++)
+            for(var id = 1;id <= _masterData.Entries.Count;id++)
             {
                 // セル生成
                 var cell = Instantiate(
@@ -32,11 +32,11 @@ namespace Launcher
                 // セル名を3桁のIDに設定
                 cell.name = $"{id:D3}";
                 // セルに情報設定
-                cell.GetComponent<GameVideoCell>().SetMovie();
-
-                if (_masterData.TryGet(id, out var entry))
+                var gameVideoCell = cell.GetComponent<GameVideoCell>();
+                gameVideoCell.SetMovie();
+                if(_masterData.TryGet(id,out var entry))
                 {
-                    Debug.Log($"ID: {entry.ProductionID}, Name: {entry.GameName}");
+                    gameVideoCell.SetText(entry.ProductionName,entry.StudentName);
                 }
             }
         }
