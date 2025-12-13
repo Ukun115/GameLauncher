@@ -21,8 +21,9 @@ MonoBehaviour:
     StudentName: "\u6CC9\u7530 \u5E0C\u9F8D(\u30EA\u30FC\u30C0\u30FC)\u3001\u9AD8\u6A4B
       \u62D3\u4E4B\u3001\u4F0A\u85E4 \u4F91\u751F"
   - ProductionID: 3
-    ProductionName: "\u30C6\u30B9\u30C83"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: "\u76EE\u6307\u305B\uFF01\u79D8\u6E6F\u30CF\u30F3\u30BF\u30FC"
+    StudentName: "\u6C38\u898B \u51DB(\u30EA\u30FC\u30C0\u30FC)\u3001\u4E0B\u5CA1
+      \u5357\u3001\u677E\u6FA4 \u5927\u8F1D"
   - ProductionID: 4
     ProductionName: "\u30C6\u30B9\u30C84"
     StudentName: "\u4F50\u7AF9 \u529F"
