@@ -25,41 +25,29 @@ MonoBehaviour:
     StudentName: "\u6C38\u898B \u51DB(\u30EA\u30FC\u30C0\u30FC)\u3001\u4E0B\u5CA1
       \u5357\u3001\u677E\u6FA4 \u5927\u8F1D"
   - ProductionID: 4
-    ProductionName: "\u30C6\u30B9\u30C84"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: "\u304A\u3070\u3051\u30AD\u30C3\u30C1\u30F3"
+    StudentName: "\u4E0B\u5CA1 \u5357"
   - ProductionID: 5
-    ProductionName: "\u30C6\u30B9\u30C85"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: Wonder Garden
+    StudentName: "\u6797 \u5F6A"
   - ProductionID: 6
-    ProductionName: "\u30C6\u30B9\u30C86"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: Crazy Guys
+    StudentName: "\u9152\u4E95 \u98A8\u99D5"
   - ProductionID: 7
-    ProductionName: "\u30C6\u30B9\u30C87"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: GRAVE WAVE
+    StudentName: "\u6C38\u898B \u51DB"
   - ProductionID: 8
-    ProductionName: "\u30C6\u30B9\u30C88"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: "\u3053\u308D\u308A\u3093"
+    StudentName: "\u4E09\u597D \u723D\u592A"
   - ProductionID: 9
-    ProductionName: "\u30C6\u30B9\u30C89"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: CITY PURSUIT
+    StudentName: "\u8C37\u672C \u512A\u6A39"
   - ProductionID: 10
-    ProductionName: "\u30C6\u30B9\u30C810"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: IsLand Flight
+    StudentName: "\u9AD8\u6A4B \u62D3\u4E4B"
   - ProductionID: 11
-    ProductionName: "\u30C6\u30B9\u30C811"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: DimensionFlip
+    StudentName: "\u5C71\u53E3 \u96BC"
   - ProductionID: 12
-    ProductionName: "\u30C6\u30B9\u30C812"
-    StudentName: "\u4F50\u7AF9 \u529F"
-  - ProductionID: 13
-    ProductionName: "\u30C6\u30B9\u30C813"
-    StudentName: "\u4F50\u7AF9 \u529F"
-  - ProductionID: 14
-    ProductionName: "\u30C6\u30B9\u30C814"
-    StudentName: "\u4F50\u7AF9 \u529F"
-  - ProductionID: 15
-    ProductionName: "\u30C6\u30B9\u30C815"
-    StudentName: "\u4F50\u7AF9 \u529F"
-  - ProductionID: 16
-    ProductionName: "\u30C6\u30B9\u30C816"
-    StudentName: "\u4F50\u7AF9 \u529F"
+    ProductionName: DELIVERY ENERGY
+    StudentName: "\u4F0A\u85E4 \u4F91\u751F"
