@@ -19,11 +19,8 @@ namespace Launcher
         [Header("Raw画像"), SerializeField]
         private RawImage _rawImage;
 
-        [Header("作品名"), SerializeField]
-        private TextMeshProUGUI _productionName;
-
-        [Header("学生名"), SerializeField]
-        private TextMeshProUGUI _studentName;
+        [Header("作品名&学生名"), SerializeField]
+        private TextMeshProUGUI _productionAndStudentName;
 
         /// <summary>
         /// Awake
@@ -60,8 +57,7 @@ namespace Launcher
         /// </summary>
         public void SetText(string productionName,string studentName)
         {
-            _productionName.text = productionName;
-            _studentName.text = studentName;
+            _productionAndStudentName.text = $"タイトル：{productionName}　開発者：{studentName}";
         }
     }
 }
