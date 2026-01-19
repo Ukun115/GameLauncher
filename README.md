@@ -1,6 +1,6 @@
 # 【ゲーム追加フロー】
 ## 【準備物編】
-- ROM
+- ROM(zip)
   - Releaseでビルドしたやつ
   - エラー落ちしないかどうか必ず確認
 - ゲーム動画
@@ -18,6 +18,11 @@
   - ex) iseki/addGames
 
 ![alt text](ReadmeImages/image-2.png)
+
+- UnityHubからGameLauncher起動。
+  - 起動出来たらAssets/Scenes/Launch.unityからシーンを開く。
+  - 【注意】Unity6000.0.58f2を使用しています。下記リンクからDLしましょう。
+  - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
 
 - Assets/Resources/Videosの中にゲーム動画を格納
   - 動画ファイル名をゲームのナンバリングに沿って命名変更
@@ -44,7 +49,7 @@
 
 ![alt text](ReadmeImages/image-6.png)
 
-- Launch.sceneのMainCanvas/VersionTextオブジェクトのTextMeshPro-Textのテキストを次のバージョン表記に変更し、シーンを保存。
+- Launch.sceneのヒエラルキービューのMainCanvas/VersionTextオブジェクトのTextMeshPro-Textのテキストを次のバージョン表記に変更し、シーンを保存。
 
 ![alt text](ReadmeImages/image-7.png)
 
@@ -66,10 +71,40 @@
 ![alt text](ReadmeImages/image-10.png)
 
 - タグ作成。「Create new tag」から新しいタグを作成。
-  - ゲームごとに3桁でナンバリングしています。最新のナンバリングに+1した値にしてください。
+  - ゲームごとに3桁でナンバリングしています。最新のナンバリングに+1した半角の値にしてください。
 
 ![alt text](ReadmeImages/image-11.png)
 
 ![alt text](ReadmeImages/image-12.png)
 
-- 
+- タイトルはタグと同じく番号を半角入力。
+
+![alt text](ReadmeImages/image13.png)
+
+- 概要記載
+  - 卒年、作品名、制作者の3点を同じ形式で記入してください。
+  
+【サンプル】
+
+卒年：27卒
+
+作品名：KAWAHARA GAME
+
+制作者：河原 太郎
+
+![alt text](ReadmeImages/image-14.png)
+
+- ROM(zip)を画像の箇所にD&D。
+  - この時、ROM(zip)のフォルダ名はナンバリングと同じ名前にしておく。
+  - ex) ナンバリングが013の場合、「013.zip」とする
+  - アップロードには少々時間かかる
+
+![alt text](ReadmeImages/image-15.png)
+
+- アップロード完了したら、「Publish release」を押下
+
+![alt text](ReadmeImages/image-16.png)
+
+- 以上でゲームの格納は完了。
+
+- 次に実機でのゲーム起動確認を行う。
