@@ -54,6 +54,12 @@
 
 ![alt text](ReadmeImages/7.png)
 
+- 参照が外れているので、Launtch.sceneのヒエラルキービューのStudentProductionsListCanvas/Panel/ScrollViewオブジェクトのStudentProductionsScrollView.csの学生作品マスターデータにアタッチ
+
+![alt text](ReadmeImages/25.png)
+
+![alt text](ReadmeImages/26.png)
+
 - Launch.sceneのヒエラルキービューのMainCanvas/VersionTextオブジェクトのTextMeshPro-Textのテキストを次のバージョン表記に変更し、シーンを保存。
 
 ![alt text](ReadmeImages/8.png)

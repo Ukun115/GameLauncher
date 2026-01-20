@@ -54,4 +54,8 @@ MonoBehaviour:
   - ProductionID: 13
     ProductionName: "\u3048\u3072\u3081\u3050\u308A"
     StudentName: "\u8C37\u672C \u512A\u6A39(\u30EA\u30FC\u30C0\u30FC)\u3001\u5C71\u53E3
-      \u96BC\u3001\u6D6E\u7530\u3000\u6D77\u6597"
+      \u96BC\u3001\u6D6E\u7530 \u6D77\u6597"
+  - ProductionID: 14
+    ProductionName: MISSION PERFECT
+    StudentName: "\u4F50\u7AF9 \u529F(\u30EA\u30FC\u30C0\u30FC)\u3001\u6B66\u7530
+      \u60A0\u4E16\u3001\u85E4\u539F \u7531\u559C"
