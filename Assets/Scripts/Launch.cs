@@ -47,6 +47,11 @@ namespace Launcher
         private string tempDir;
 
         /// <summary>
+        /// プロセス
+        /// </summary>
+        private Process _process;
+
+        /// <summary>
         /// Awake
         /// </summary>
         private void Awake()
@@ -68,6 +73,20 @@ namespace Launcher
             // ディレクトリ作成
             Directory.CreateDirectory(gamesRootDir);
             Directory.CreateDirectory(tempDir);
+        }
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        private void Update()
+        {
+            // 起動したゲームが終了されたとき
+            if (_process != null && _process.HasExited)
+            {
+                // オーバーレイ非表示
+                _overlayImage.SetActive(false);
+                _process = null;
+            }
         }
 
         /// <summary>
@@ -197,7 +216,7 @@ namespace Launcher
             _overlayImage.SetActive(true);
 
             // 起動
-            Process.Start(processStartInfo);
+            _process = Process.Start(processStartInfo);
         }
 
         /// <summary>
