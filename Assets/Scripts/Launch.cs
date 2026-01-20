@@ -28,6 +28,9 @@ namespace Launcher
         /// </summary>
         private static readonly string ZipExtention = ".zip";
 
+        [Header("オーバーレイ画像"), SerializeField]
+        private GameObject _overlayImage;
+
         /// <summary>
         /// シングルトン
         /// </summary>
@@ -189,6 +192,9 @@ namespace Launcher
                 WorkingDirectory = installDir,  // インストールしたディレクトリ   
                 UseShellExecute = false
             };
+
+            // オーバーレイ表示
+            _overlayImage.SetActive(true);
 
             // 起動
             Process.Start(processStartInfo);

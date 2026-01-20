@@ -2481,8 +2481,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 200
+  m_fontSizeBase: 200
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5722,6 +5722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa6d0b41973e5b4082f463aad64c2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _overlayImage: {fileID: 777721343}
 --- !u!4 &1665691257
 Transform:
   m_ObjectHideFlags: 0
@@ -15364,9 +15365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'v1.3.1
-
-'
+  m_text: v1.5.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
   m_sharedMaterial: {fileID: -2542853447029897345, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
