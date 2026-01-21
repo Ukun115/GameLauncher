@@ -12087,7 +12087,7 @@ GameObject:
   - component: {fileID: 574150024635167196}
   - component: {fileID: 393855801157267476}
   m_Layer: 5
-  m_Name: LoadingText
+  m_Name: ProgressValueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23653,7 +23653,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3061\u3087\u3063\u3068\u5F85\u3063\u3066\u306D"
+  m_text: "\u30ED\u30FC\u30C9\u4E2D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
   m_sharedMaterial: {fileID: -2542853447029897345, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
@@ -23680,8 +23680,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -25290,7 +25290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30ED\u30FC\u30C9\u4E2D"
+  m_text: 100%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
   m_sharedMaterial: {fileID: -2542853447029897345, guid: b3ff937bdd7b849b2ad5c72309527ffb, type: 2}
@@ -32955,9 +32955,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 629, y: -275}
-  m_SizeDelta: {x: 542, y: 62.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 900, y: -275}
+  m_SizeDelta: {x: 250, y: 62.1}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &575658651930520458
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34211,6 +34211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 393972674452307670}
+  _progressValueText: {fileID: 393855801157267476}
 --- !u!224 &575970389494424208
 RectTransform:
   m_ObjectHideFlags: 0
