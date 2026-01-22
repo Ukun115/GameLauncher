@@ -33,7 +33,7 @@ namespace Launcher
         [Header("オーバーレイ画像"), SerializeField]
         private GameObject _overlayImage;
 
-        [Header("ローディングキャンバスオブジェクト"),SerializeField]
+        [Header("ローディングキャンバスオブジェクト"), SerializeField]
         private GameObject _loadingCanvasObj;
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Launcher
                     this.GetCancellationTokenOnDestroy()
                 );
             }
-            catch (System.Exception exception)
+            catch (Exception)
             {
                 if (Directory.Exists(installDir))
                 {

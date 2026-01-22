@@ -3,7 +3,13 @@
     {
       "ProductionID": 1,
       "GameName": "CrazyDelivery",
-      "StudentName": "佐竹 功"
+      "StudentName": "佐竹 功",
+      "GraduationYear": 2026,
+      "EventType": "就活作品",
+      "TeamOrSolo": "一人",
+      "GameGenre": "アクション",
+      "GameEngine": "DirectX12",
+      "GameDescription": "プレイヤーは配達員となり、食べ物をお客様まで届けるアクションゲームです。障害物を避けたり、ジャンプしたり、スピードを調整したりすることで、効率的に配達を行います。ハイスコアを目指して、制限時間内にできるだけ多くの配達を成功させましょう！"
     },
     {
       "ProductionID": 2,
