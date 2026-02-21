@@ -14,23 +14,54 @@ namespace Launcher
             var list = new List<StudentProductionRow>();
             using var sr = new StreamReader(csvPath);
             string line = sr.ReadLine();
-            if(line == null) throw new Exception("CSV empty");
+            if(line == null)
+            {
+                throw new Exception("CSV empty");
+            }
+
             var headers = SplitCsv(line);
+
             int idxId = Array.FindIndex(headers,h => string.Equals(h.Trim(),"ProductionID",StringComparison.OrdinalIgnoreCase));
             int idxName = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GameName",StringComparison.OrdinalIgnoreCase));
-            if(idxId < 0 || idxName < 0) throw new Exception("CSV headers must include ProductionID, GameName");
+            int idxStudentName = Array.FindIndex(headers,h => string.Equals(h.Trim(),"StudentName",StringComparison.OrdinalIgnoreCase));
+            int idxGraduationYear = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GraduationYear",StringComparison.OrdinalIgnoreCase));
+            int idxEventType = Array.FindIndex(headers,h => string.Equals(h.Trim(),"EventType",StringComparison.OrdinalIgnoreCase));
+            int idxTeamOrSolo = Array.FindIndex(headers,h => string.Equals(h.Trim(),"TeamOrSolo",StringComparison.OrdinalIgnoreCase));
+            int idxGameGenre = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GameGenre",StringComparison.OrdinalIgnoreCase));
+            int idxGameEngine = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GameEngine",StringComparison.OrdinalIgnoreCase));
+            int idxGameDescription = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GameDescription",StringComparison.OrdinalIgnoreCase));
+            int idxUpdateDate = Array.FindIndex(headers,h => string.Equals(h.Trim(),"UpdateDate",StringComparison.OrdinalIgnoreCase));
+
+            if(idxId < 0 || idxName < 0)
+            {
+                throw new Exception("CSV headers must include ProductionID, GameName");
+            }
 
             while((line = sr.ReadLine()) != null)
             {
-                if(string.IsNullOrWhiteSpace(line)) continue;
+                if(string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+
                 var cells = SplitCsv(line);
                 var row = new StudentProductionRow
                 {
                     ProductionID = int.TryParse(GetCell(cells,idxId),out var id) ? id : 0,
                     GameName = GetCell(cells,idxName),
+                    StudentName = GetCell(cells,idxStudentName),
+                    GraduationYear = int.TryParse(GetCell(cells,idxGraduationYear),out var year) ? year : 0,
+                    EventType = GetCell(cells,idxEventType),
+                    TeamOrSolo = GetCell(cells,idxTeamOrSolo),
+                    GameGenre = GetCell(cells,idxGameGenre),
+                    GameEngine = GetCell(cells,idxGameEngine),
+                    GameDescription = GetCell(cells,idxGameDescription),
+                    UpdateDate = GetCell(cells,idxUpdateDate),
                 };
+
                 list.Add(row);
             }
+
             return list.ToArray();
         }
 
@@ -40,20 +71,31 @@ namespace Launcher
         {
             var result = new List<string>();
             bool inQuote = false; var cur = new System.Text.StringBuilder();
+
             for(int i = 0;i < line.Length;i++)
             {
                 char c = line[i];
                 if(c == '"')
                 {
-                    if(inQuote && i + 1 < line.Length && line[i + 1] == '"') { cur.Append('"'); i++; }
-                    else inQuote = !inQuote;
+                    if(inQuote && i + 1 < line.Length && line[i + 1] == '"')
+                    {
+                        cur.Append('"'); i++;
+                    }
+                    else
+                    {
+                        inQuote = !inQuote;
+                    }
                 }
                 else if(c == ',' && !inQuote)
                 {
                     result.Add(cur.ToString()); cur.Clear();
                 }
-                else cur.Append(c);
+                else
+                {
+                    cur.Append(c);
+                }
             }
+
             result.Add(cur.ToString());
             return result.ToArray();
         }
