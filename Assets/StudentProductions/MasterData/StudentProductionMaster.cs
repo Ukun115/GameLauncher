@@ -7,9 +7,11 @@ namespace Launcher
     /// <summary>
     /// 学生制作物マスターデータ（単体）
     /// </summary>
-    [CreateAssetMenu(menuName = "Master/Student Productions (Single)",fileName = "StudentProductionsMaster")]
     public class StudentProductionsMaster : ScriptableObject
     {
+        /// <summary>
+        /// 学生制作物のエントリー
+        /// </summary>
         [Serializable]
         public class Entry
         {
@@ -25,14 +27,20 @@ namespace Launcher
             public string UpdateDate;
         }
 
-        [SerializeField] private List<Entry> entries = new();
+        [SerializeField]
+        private List<Entry> _entries = new();
 
-        private Dictionary<int,Entry> index;
-        public IReadOnlyList<Entry> Entries => entries;
+        private Dictionary<int,Entry> _index;
 
+        public IReadOnlyList<Entry> Entries => _entries;
+
+        /// <summary>
+        /// 学生制作物のエントリーを全てセットする
+        /// </summary>
+        /// <param name="rows"> 行 </param>
         public void SetAll(StudentProductionRow[] rows)
         {
-            entries.Clear();
+            _entries.Clear();
             if(rows == null)
             {
                 return;
@@ -40,7 +48,7 @@ namespace Launcher
 
             foreach(var r in rows)
             {
-                entries.Add(new Entry
+                _entries.Add(new Entry
                 {
                     ProductionID = r.ProductionID,
                     StudentName = r.StudentName ?? string.Empty,
@@ -61,24 +69,24 @@ namespace Launcher
 
         private void BuildIndex()
         {
-            index = new Dictionary<int,Entry>();
-            foreach(var e in entries)
+            _index = new Dictionary<int,Entry>();
+            foreach(var e in _entries)
             {
-                if(!index.ContainsKey(e.ProductionID))
+                if(!_index.ContainsKey(e.ProductionID))
                 {
-                    index[e.ProductionID] = e;
+                    _index[e.ProductionID] = e;
                 }
             }
         }
 
         public bool TryGet(int productionId,out Entry e)
         {
-            if(index == null)
+            if(_index == null)
             {
                 BuildIndex();
             }
 
-            return index.TryGetValue(productionId,out e);
+            return _index.TryGetValue(productionId,out e);
         }
     }
 }

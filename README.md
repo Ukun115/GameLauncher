@@ -37,18 +37,13 @@
 
 - Assets/StudentProductions/MasterData/StudentProductionMaster.jsonの最後尾にマスターデータを追加
   - 書き方は既存のマスターデータをマネてください。
-  - マスターデータの各項目は基本持たせてください。無い場合はnullでOK。
+  - マスターデータの各項目は基本持たせてください。無い場合は空でOK。[注意]IDとゲーム名だけは必ず入れてください。
 
 ![alt text](ReadmeImages/3.png)
 
 ![alt text](ReadmeImages/4.png)
 
-- Assets/StudentProductions/MasterData/StudentProductionsMaster.assetを削除
-  - 古いScriptableObjectなので、Jsonに追加したマスターデータを含むScriptableObjectを作らないといけない
-
-![alt text](ReadmeImages/5.png)
-
-- 下の画像からAssets/StudentProductions/MasterData/StudentProductionMaster.jsonを選択しJsonデータをインポート。新しいScriptableObjectを作成。
+- 下の画像からAssets/StudentProductions/MasterData/StudentProductionMaster.jsonを選択しJsonデータをインポート。ScriptableObjectを更新させる。
 
 ![alt text](ReadmeImages/6.png)
 

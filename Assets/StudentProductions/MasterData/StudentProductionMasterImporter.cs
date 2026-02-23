@@ -1,10 +1,10 @@
 ﻿// NOTE:iseki ビルド時にコンパイル対象から外れる
 #if UNITY_EDITOR
 
-using UnityEditor;
-using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace Launcher
 {
@@ -13,65 +13,98 @@ namespace Launcher
     /// </summary>
     public static class StudentProductionsSingleAssetImporter
     {
-        private const string OUTPUT_DIR = "Assets/StudentProductions/MasterData";
-        private const string OUTPUT_ASSET = OUTPUT_DIR + "/StudentProductionsMaster.asset";
+        /// <summary>
+        /// 出力先ディレクトリ
+        /// </summary>
+        private static readonly string OutputDir = "Assets/StudentProductions/MasterData";
 
-        [MenuItem("Master/Import StudentProductions (Single) from JSON")]
+        /// <summary>
+        /// 出力先アセットパス
+        /// </summary>
+        private static readonly string OutputAssetPass = $"{OutputDir}/StudentProductionsMaster.asset";
+
+        /// <summary>
+        /// メニューから、Jsonファイルから学生作品情報をインポート
+        /// </summary>
+        [MenuItem("学生作品情報を生成/Jsonファイルから学生作品データを生成")]
         public static void ImportFromJson()
         {
-            var path = EditorUtility.OpenFilePanel("Select StudentProductions.json",Application.dataPath,"json");
-            if(string.IsNullOrEmpty(path)) return;
-            var json = File.ReadAllText(path);
-            var set = JsonUtility.FromJson<StudentProductionRowSet>(json);
-            if(set == null || set.rows == null)
+            // ファイル選択ダイアログを開き、Jsonファイルを選択
+            var path = EditorUtility.OpenFilePanel("学生作品(Jsonファイル)を選んでください。",Application.dataPath,"json");
+
+            if(string.IsNullOrEmpty(path))
             {
-                Debug.LogError("JSON parse failed or 'rows' missing.");
                 return;
             }
-            ImportRows(set.rows);
+
+            // Jsonファイルを読み込み、studentProductionsにパース
+            var jsonFile = File.ReadAllText(path);
+            var studentProductions = JsonUtility.FromJson<StudentProductions>(jsonFile);
+            if(studentProductions == null || studentProductions.Rows == null)
+            {
+                Debug.LogError("Jsonのパースに失敗したか、「行(Rows)」が見つかりませんでした。");
+                return;
+            }
+
+            // エクスポート可能の場合ScriptableObjectへエクスポート
+            if(CanExport(studentProductions.Rows))
+            {
+                ExportScriptableObject(studentProductions.Rows);
+            }
         }
 
-        [MenuItem("Master/Import StudentProductions (Single) from CSV")]
-        public static void ImportFromCsv()
+        /// <summary>
+        /// エクスポート可能かをチェック
+        /// </summary>
+        /// <param name="rows"> 行 </param>
+        private static bool CanExport(StudentProductionRow[] rows)
         {
-            var path = EditorUtility.OpenFilePanel("Select StudentProductions.csv",Application.dataPath,"csv");
-            if(string.IsNullOrEmpty(path)) return;
-            var rows = StudentProductionImporter_Util.ReadCsv(path);
-            ImportRows(rows);
-        }
-
-        private static void ImportRows(StudentProductionRow[] rows)
-        {
+            // ID：重複チェックと正の整数チェック
             var dup = rows.GroupBy(r => r.ProductionID).Where(g => g.Count() > 1).Select(g => g.Key).ToArray();
             if(dup.Length > 0)
             {
-                Debug.LogError($"Duplicate ProductionID: {string.Join(", ",dup)}");
-                return;
+                Debug.LogError($"IDに重複がありました。: {string.Join(", ",dup)}");
+                return false;
             }
             if(rows.Any(r => r.ProductionID <= 0))
             {
-                Debug.LogError("ProductionID must be positive.");
-                return;
+                Debug.LogError("IDは正の整数である必要があります。");
+                return false;
             }
 
+            // ディレクトリなければ作成
             if(!AssetDatabase.IsValidFolder("Assets/StudentProductions"))
-                AssetDatabase.CreateFolder("Assets","StudentProductions");
-            if(!AssetDatabase.IsValidFolder(OUTPUT_DIR))
-                AssetDatabase.CreateFolder("Assets/StudentProductions","MasterData");
-
-            var so = AssetDatabase.LoadAssetAtPath<StudentProductionsMaster>(OUTPUT_ASSET);
-            if(so == null)
             {
-                so = ScriptableObject.CreateInstance<StudentProductionsMaster>();
-                AssetDatabase.CreateAsset(so,OUTPUT_ASSET);
+                AssetDatabase.CreateFolder("Assets","StudentProductions");
+            }
+            if(!AssetDatabase.IsValidFolder(OutputDir))
+            {
+                AssetDatabase.CreateFolder("Assets/StudentProductions","MasterData");
             }
 
-            so.SetAll(rows);
-            EditorUtility.SetDirty(so);
+            return true;
+        }
+
+        /// <summary>
+        /// ScriptableObjectへエクスポート
+        /// </summary>
+        private static void ExportScriptableObject(StudentProductionRow[] rows)
+        {
+            // 既にアセットが存在する場合はロード、存在しない場合は新規作成
+            var scriptableObject = AssetDatabase.LoadAssetAtPath<StudentProductionsMaster>(OutputAssetPass);
+            if(scriptableObject == null)
+            {
+                scriptableObject = ScriptableObject.CreateInstance<StudentProductionsMaster>();
+                AssetDatabase.CreateAsset(scriptableObject,OutputAssetPass);
+            }
+
+            // ScriptableObjectにデータをセットして保存
+            scriptableObject.SetAll(rows);
+            EditorUtility.SetDirty(scriptableObject);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log($"Imported {rows.Length} rows into {OUTPUT_ASSET}");
+            Debug.Log($"{rows.Length}個の作品データを{OutputAssetPass}へエクスポートしました。");
         }
     }
 }

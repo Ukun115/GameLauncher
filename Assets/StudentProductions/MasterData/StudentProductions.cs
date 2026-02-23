@@ -1,14 +1,14 @@
 ﻿namespace Launcher
 {
     /// <summary>
-    /// 学生作品(行)を設定
+    /// 学生作品群
     /// </summary>
     [System.Serializable]
-    public class StudentProductionRowSet
+    public class StudentProductions
     {
         /// <summary>
         /// 作成作品(行)群
         /// </summary>
-        public StudentProductionRow[] rows;
+        public StudentProductionRow[] Rows;
     }
 }
