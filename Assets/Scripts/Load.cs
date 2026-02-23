@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Launcher
 {
-	/// <summary>
-	/// ロード
-	/// </summary>
-	public class Load : MonoBehaviour
-	{
-		[Header("ローディングスライダー"),SerializeField]
-		private Slider _slider;
+    /// <summary>
+    /// ロード
+    /// </summary>
+    public class Load : MonoBehaviour
+    {
+        [Header("ローディングスライダー"), SerializeField]
+        private Slider _slider;
 
         [Header("ローディングテキスト"), SerializeField]
         private TextMeshProUGUI _progressValueText;

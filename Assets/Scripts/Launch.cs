@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
@@ -17,7 +16,7 @@ namespace Launcher
     public class Launch : MonoBehaviour
     {
         /// <summary>
-        /// GitHub リポジトリのベースURL（最後の / は付けない）
+        /// GitHub リポジトリのベースURL
         /// </summary>
         private static readonly string GithubBaseUrl = "https://github.com/Ukun115/StudentProductions/releases/download";
 
@@ -36,9 +35,6 @@ namespace Launcher
 
         [Header("ローディングキャンバスオブジェクト"), SerializeField]
         private GameObject _loadingCanvasObj;
-
-        [Header("アプリバージョンテキスト"), SerializeField]
-        private TextMeshPro _versionText;
 
         /// <summary>
         /// シングルトン
@@ -60,9 +56,6 @@ namespace Launcher
         /// </summary>
         private Process _process;
 
-        // =========================
-        // 進捗通知（UI側で購読する）
-        // =========================
         /// <summary>
         /// ダウンロード進捗（0..1）
         /// </summary>
@@ -105,9 +98,6 @@ namespace Launcher
             // ディレクトリ作成
             Directory.CreateDirectory(gamesRootDir);
             Directory.CreateDirectory(tempDir);
-
-            // アプリバージョン表示
-            _versionText.text = $"v{Application.version}";
         }
 
         /// <summary>
@@ -115,10 +105,9 @@ namespace Launcher
         /// </summary>
         private void Update()
         {
-            // 起動したゲームが終了されたとき
+            // 起動したゲームが終了されたときオーバーレイを非表示
             if(_process != null && _process.HasExited)
             {
-                // オーバーレイ非表示
                 _overlayImage.SetActive(false);
                 _process = null;
             }
