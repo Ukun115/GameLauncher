@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
@@ -35,6 +36,9 @@ namespace Launcher
 
         [Header("ローディングキャンバスオブジェクト"), SerializeField]
         private GameObject _loadingCanvasObj;
+
+        [Header("アプリバージョンテキスト"), SerializeField]
+        private TextMeshPro _versionText;
 
         /// <summary>
         /// シングルトン
@@ -85,7 +89,7 @@ namespace Launcher
         private void Awake()
         {
             // シングルトンチェック
-            if (Instance)
+            if(Instance)
             {
                 Destroy(gameObject);
             }
@@ -95,12 +99,15 @@ namespace Launcher
             }
 
             // ローカルのインストール先
-            gamesRootDir = Path.Combine(Application.persistentDataPath, "Games");
-            tempDir = Path.Combine(Application.persistentDataPath, "temp");
+            gamesRootDir = Path.Combine(Application.persistentDataPath,"Games");
+            tempDir = Path.Combine(Application.persistentDataPath,"temp");
 
             // ディレクトリ作成
             Directory.CreateDirectory(gamesRootDir);
             Directory.CreateDirectory(tempDir);
+
+            // アプリバージョン表示
+            _versionText.text = $"v{Application.version}";
         }
 
         /// <summary>
@@ -109,7 +116,7 @@ namespace Launcher
         private void Update()
         {
             // 起動したゲームが終了されたとき
-            if (_process != null && _process.HasExited)
+            if(_process != null && _process.HasExited)
             {
                 // オーバーレイ非表示
                 _overlayImage.SetActive(false);
@@ -134,18 +141,18 @@ namespace Launcher
         private async UniTask LaunchTask(string productionName)
         {
             // インストール先フォルダ
-            var installDir = Path.Combine(gamesRootDir, productionName);
-            var exePath = Path.Combine(installDir, ExeFileName);
+            var installDir = Path.Combine(gamesRootDir,productionName);
+            var exePath = Path.Combine(installDir,ExeFileName);
 
             Debug.Log(installDir);
             Debug.Log(exePath);
 
             // 既にインストール済みならそのまま起動
-            if (File.Exists(exePath))
+            if(File.Exists(exePath))
             {
                 Debug.Log("既にDL済。起動。");
 
-                StartProcess(exePath, installDir);
+                StartProcess(exePath,installDir);
                 return;
             }
 
@@ -154,14 +161,14 @@ namespace Launcher
 
             // 未インストールなら GitHub から DL → 解凍
             var githubZipUrl = $"{GithubBaseUrl}/{productionName}/{productionName}{ZipExtention}";
-            var zipPath = Path.Combine(tempDir, $"{productionName}{ZipExtention}");
+            var zipPath = Path.Combine(tempDir,$"{productionName}{ZipExtention}");
 
             // 作品ごとのキャッシュキー
             var cacheKey = $"RealDownloadUrl_{productionName}";
             string zipUrl;
 
             // キャッシュがあれば使う
-            if (PlayerPrefs.HasKey(cacheKey))
+            if(PlayerPrefs.HasKey(cacheKey))
             {
                 zipUrl = PlayerPrefs.GetString(cacheKey);
             }
@@ -171,7 +178,7 @@ namespace Launcher
                 // 最終的なURLを解決
                 zipUrl = await ResolveFinalUrl(githubZipUrl);
                 // キャッシュ保存
-                PlayerPrefs.SetString(cacheKey, zipUrl);
+                PlayerPrefs.SetString(cacheKey,zipUrl);
                 PlayerPrefs.Save();
             }
 
@@ -211,7 +218,7 @@ namespace Launcher
 
                 Debug.Log("ネットワークリクエスト成功");
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 // TODO:iseki UIでエラー表示
                 Debug.LogError($"ネットワークリクエスト失敗: {e.Message}");
@@ -224,7 +231,7 @@ namespace Launcher
                 try
                 {
                     zipUrl = await ResolveFinalUrl(githubZipUrl);
-                    PlayerPrefs.SetString(cacheKey, zipUrl);
+                    PlayerPrefs.SetString(cacheKey,zipUrl);
                     PlayerPrefs.Save();
 
                     OnStatus?.Invoke("Downloading...");
@@ -243,7 +250,7 @@ namespace Launcher
 
                     Debug.Log("ネットワークリクエスト成功");
                 }
-                catch (Exception e2)
+                catch(Exception e2)
                 {
                     Debug.LogError($"ネットワークリクエスト失敗: {e2.Message}");
                     CleanupZipIfExists(zipPath);
@@ -252,11 +259,11 @@ namespace Launcher
             }
 
             // 既に同名フォルダがあれば削除（再インストール想定）
-            if (Directory.Exists(installDir))
+            if(Directory.Exists(installDir))
             {
                 Debug.Log("既にDL済");
 
-                Directory.Delete(installDir, true);
+                Directory.Delete(installDir,true);
             }
 
             try
@@ -280,13 +287,13 @@ namespace Launcher
                     this.GetCancellationTokenOnDestroy()
                 );
             }
-            catch (Exception)
+            catch(Exception)
             {
-                if (Directory.Exists(installDir))
+                if(Directory.Exists(installDir))
                 {
                     Debug.Log("既にDL済");
 
-                    Directory.Delete(installDir, true);
+                    Directory.Delete(installDir,true);
                 }
 
                 return;
@@ -294,7 +301,7 @@ namespace Launcher
             finally
             {
                 // zipは必ず削除
-                if (File.Exists(zipPath))
+                if(File.Exists(zipPath))
                 {
                     Debug.Log("Zipファイル削除");
 
@@ -303,7 +310,7 @@ namespace Launcher
             }
 
             // exeパス確認
-            if (!File.Exists(exePath))
+            if(!File.Exists(exePath))
             {
                 return;
             }
@@ -311,13 +318,13 @@ namespace Launcher
             Debug.Log("DL完了。起動。");
 
             // 起動
-            StartProcess(exePath, installDir);
+            StartProcess(exePath,installDir);
         }
 
         /// <summary>
         /// プロセス起動
         /// </summary>
-        private void StartProcess(string exePath, string installDir)
+        private void StartProcess(string exePath,string installDir)
         {
             // プロセス情報
             var processStartInfo = new ProcessStartInfo
@@ -342,8 +349,8 @@ namespace Launcher
         /// </summary>
         public bool IsInstalled(string productionName)
         {
-            var installDir = Path.Combine(gamesRootDir, productionName);
-            var exePath = Path.Combine(installDir, ExeFileName);
+            var installDir = Path.Combine(gamesRootDir,productionName);
+            var exePath = Path.Combine(installDir,ExeFileName);
             return File.Exists(exePath);
         }
 
@@ -356,14 +363,14 @@ namespace Launcher
         {
             // 1バイトだけ取得するリクエストを送る（リダイレクト先を取得するため）
             using var req = UnityWebRequest.Get(url);
-            req.SetRequestHeader("Range", "bytes=0-0");
+            req.SetRequestHeader("Range","bytes=0-0");
             req.downloadHandler = new DownloadHandlerBuffer();
 
             // Webリクエスト送信を待つ
             await req.SendWebRequest();
 
             // エラーチェック
-            if (req.result != UnityWebRequest.Result.Success)
+            if(req.result != UnityWebRequest.Result.Success)
             {
                 throw new System.Exception($"Resolve failed: {req.error}");
             }
@@ -387,28 +394,28 @@ namespace Launcher
 
             // Content-Length を HEAD で取得（取れないこともある）
             long totalBytes = -1;
-            using (var head = UnityWebRequest.Head(url))
+            using(var head = UnityWebRequest.Head(url))
             {
                 await head.SendWebRequest().ToUniTask(cancellationToken: token);
-                if (head.result == UnityWebRequest.Result.Success)
+                if(head.result == UnityWebRequest.Result.Success)
                 {
                     var lenStr = head.GetResponseHeader("Content-Length");
-                    if (!string.IsNullOrEmpty(lenStr) && long.TryParse(lenStr, out var len))
+                    if(!string.IsNullOrEmpty(lenStr) && long.TryParse(lenStr,out var len))
                         totalBytes = len;
                 }
             }
 
             long receivedBytes = 0;
 
-            using var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            var handler = new FileStreamDownloadHandler(fs, chunkLen =>
+            using var fs = new FileStream(savePath,FileMode.Create,FileAccess.Write,FileShare.None);
+            var handler = new FileStreamDownloadHandler(fs,chunkLen =>
             {
                 receivedBytes += chunkLen;
-                if (totalBytes > 0)
+                if(totalBytes > 0)
                     onProgress?.Invoke(Mathf.Clamp01((float)receivedBytes / totalBytes));
             });
 
-            using var req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbGET)
+            using var req = new UnityWebRequest(url,UnityWebRequest.kHttpVerbGET)
             {
                 downloadHandler = handler
             };
@@ -420,15 +427,15 @@ namespace Launcher
             var op = req.SendWebRequest();
 
             // totalBytesが取れない場合は目安としてUnityのdownloadProgressを使う
-            while (!op.isDone)
+            while(!op.isDone)
             {
-                if (totalBytes <= 0)
+                if(totalBytes <= 0)
                     onProgress?.Invoke(req.downloadProgress);
 
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await UniTask.Yield(PlayerLoopTiming.Update,token);
             }
 
-            if (req.result != UnityWebRequest.Result.Success)
+            if(req.result != UnityWebRequest.Result.Success)
                 throw new Exception($"Download failed: {req.error}");
 
             onProgress?.Invoke(1f);
@@ -442,18 +449,18 @@ namespace Launcher
             private readonly FileStream _fs;
             private readonly Action<int> _onChunk;
 
-            public FileStreamDownloadHandler(FileStream fs, Action<int> onChunk, int bufferSize = 64 * 1024)
+            public FileStreamDownloadHandler(FileStream fs,Action<int> onChunk,int bufferSize = 64 * 1024)
                 : base(new byte[bufferSize])
             {
                 _fs = fs;
                 _onChunk = onChunk;
             }
 
-            protected override bool ReceiveData(byte[] data, int dataLength)
+            protected override bool ReceiveData(byte[] data,int dataLength)
             {
-                if (data == null || dataLength <= 0) return false;
+                if(data == null || dataLength <= 0) return false;
 
-                _fs.Write(data, 0, dataLength);
+                _fs.Write(data,0,dataLength);
                 _onChunk?.Invoke(dataLength);
                 return true;
             }
@@ -477,24 +484,24 @@ namespace Launcher
         {
             Directory.CreateDirectory(destDir);
 
-            using var fs = new FileStream(zipPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using var archive = new ZipArchive(fs, ZipArchiveMode.Read);
+            using var fs = new FileStream(zipPath,FileMode.Open,FileAccess.Read,FileShare.Read);
+            using var archive = new ZipArchive(fs,ZipArchiveMode.Read);
 
             // 全エントリの合計バイト（ディレクトリは0）
             long total = 0;
-            foreach (var e in archive.Entries)
+            foreach(var e in archive.Entries)
                 total += e.Length;
 
             long done = 0;
 
-            foreach (var entry in archive.Entries)
+            foreach(var entry in archive.Entries)
             {
                 token.ThrowIfCancellationRequested();
 
-                var fullPath = Path.Combine(destDir, entry.FullName);
+                var fullPath = Path.Combine(destDir,entry.FullName);
 
                 // ディレクトリエントリ
-                if (string.IsNullOrEmpty(entry.Name))
+                if(string.IsNullOrEmpty(entry.Name))
                 {
                     Directory.CreateDirectory(fullPath);
                     continue;
@@ -503,21 +510,21 @@ namespace Launcher
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
                 using var entryStream = entry.Open();
-                using var outStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                using var outStream = new FileStream(fullPath,FileMode.Create,FileAccess.Write,FileShare.None);
 
                 var buffer = new byte[64 * 1024];
                 int read;
-                while ((read = entryStream.Read(buffer, 0, buffer.Length)) > 0)
+                while((read = entryStream.Read(buffer,0,buffer.Length)) > 0)
                 {
-                    await outStream.WriteAsync(buffer, 0, read, token);
+                    await outStream.WriteAsync(buffer,0,read,token);
                     done += read;
 
-                    if (total > 0)
+                    if(total > 0)
                         onProgress?.Invoke(Mathf.Clamp01((float)done / total));
                 }
 
                 // UI更新しやすいように1フレーム返す
-                await UniTask.Yield(PlayerLoopTiming.Update, token);
+                await UniTask.Yield(PlayerLoopTiming.Update,token);
             }
 
             onProgress?.Invoke(1f);
@@ -525,7 +532,7 @@ namespace Launcher
 
         private void CleanupZipIfExists(string zipPath)
         {
-            if (File.Exists(zipPath))
+            if(File.Exists(zipPath))
             {
                 try { File.Delete(zipPath); }
                 catch { /* 握りつぶし */ }
