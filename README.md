@@ -8,8 +8,8 @@
 - ゲーム動画
   - PVが望ましい
   - 100MB以下の制限あり。60sくらいの動画だったら大丈夫なはず。
-- Unityバージョン(6000.3.0f1を使用しています。下記リンクからDLしましょう。)
-  - https://unity.com/releases/editor/whats-new/6000.3.0f1
+- Unityバージョン(6000.3.9f1を使用しています。下記リンクからDLしましょう。)
+  - [https://unity.com/releases/editor/whats-new/6000.3.0f1](https://unity.com/ja/releases/editor/whats-new/6000.3.9f1)
 - ゲームランチャーの開発リポジトリをクローン
   - やり方は下記に記載
  
@@ -27,9 +27,7 @@
 ## 【Unity編】
 - UnityHubからGameLauncher起動。
   - 起動出来たらAssets/Scenes/Launch.unityからシーンを開く。
-  - Unityバージョン(6000.3.0f1を使用しています。下記リンクからDLしましょう。)
-    - https://unity.com/releases/editor/whats-new/6000.3.0f1
-
+  
 - 下の画像のメニューからダイアログを表示し、学生作品の動画や情報を入力。全て入力し終わったら「実行」を押下。これで作品データ追加が完了です。
 
 ![alt text](ReadmeImages/2.png)
