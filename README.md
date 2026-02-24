@@ -16,7 +16,6 @@
 ## 【GitGUI編】
 - 下記リンクからリポジトリを落としてくる。
   - https://github.com/Ukun115/GameLauncher
-  - privateアクセスなので、伊関からコラボレーターとしてリポジトリに参加しないと「404 not found」が出てきます。
   - 【注意】zipをDLしてこないよう注意。リポジトリをクローンしてください。
 - GitGUIはおそらく「Fork」を使用するはず
 - 最新mainから作業ブランチ作成
