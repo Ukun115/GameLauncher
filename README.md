@@ -105,10 +105,10 @@
 
 ## 【ゲームランチャービルド編】
 - 下の画像のメニューからビルド&Zip化(ビルドしたROMはダウンロードに生成されます)
-- ビルドしたゲームランチャーのROMを展開し起動。動作チェックをしましょう。
 
 ![alt text](ReadmeImages/14.png)
 
+- ビルドしたゲームランチャーのROMを展開し起動。動作チェックをしましょう。
 - 下記URLにゲームランチャー.zipをアップロード
   - https://github.com/Ukun115/StudentProductions/releases/tag/GameLauncher
   - 【注意】過去バージョンのゲームランチャー.zipを削除しない
