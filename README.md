@@ -27,8 +27,8 @@
 ## 【Unity編】
 - UnityHubからGameLauncher起動。
   - 起動出来たらAssets/Scenes/Launch.unityからシーンを開く。
-  - 【注意】Unity6000.0.58f2を使用しています。下記リンクからDLしましょう。
-  - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
+  - Unityバージョン(6000.3.0f1を使用しています。下記リンクからDLしましょう。)
+    - https://unity.com/releases/editor/whats-new/6000.3.0f1
 
 - 下の画像のメニューからダイアログを表示し、学生作品の動画や情報を入力。全て入力し終わったら「実行」を押下。これで作品データ追加が完了です。
 
