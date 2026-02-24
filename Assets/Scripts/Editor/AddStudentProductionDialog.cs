@@ -1,5 +1,4 @@
-﻿#if UNITY_EDITOR
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using System.IO;
@@ -498,4 +497,3 @@ namespace Launcher
         }
     }
 }
-#endif
