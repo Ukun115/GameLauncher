@@ -36,6 +36,8 @@
 ![alt text](ReadmeImages/3.png)
 
 - 下の画像のメニューからダイアログを表示し、次のバージョンを入力。入力出来たら「適応」を押下。これでバージョン更新完了です。
+  - 自分のバージョンがどのバージョンになるかは下記リンクを参照。
+  - https://github.com/Ukun115/StudentProductions?tab=readme-ov-file#%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E8%A1%A8%E8%A8%98%E8%A6%8F%E5%89%87
 
 ![alt text](ReadmeImages/4.png)
 
@@ -102,29 +104,10 @@
   - 「temp」フォルダはDLしてきたzipが格納されるフォルダ。「Games」フォルダは解凍したROMが格納されるフォルダ。
 
 ## 【ゲームランチャービルド編】
-- ビルド
+- 下の画像のメニューからビルド&Zip化(ビルドしたROMはダウンロードに生成されます)
+- ビルドしたゲームランチャーのROMを展開し起動。動作チェックをしましょう。
 
-![alt text](ReadmeImages/18.png)
-![alt text](ReadmeImages/19.png)
-
-- ゲームランチャーのフォルダを作成し、作成したフォルダを選択
-  - フォルダ名は「GameLauncher_vX.Y.Z」のようにする
-  - 作ろうとしているバージョン名に合わせよう！自分のバージョンがどのバージョンになるかは下記リンクを参照。
-  - https://github.com/Ukun115/StudentProductions?tab=readme-ov-file#%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E8%A1%A8%E8%A8%98%E8%A6%8F%E5%89%87
-
-![alt text](ReadmeImages/20.png)
-
-- 下記フォルダ名のフォルダは不要なので削除
-  - GameLauncher_BurstDebugInformation_DoNotShip
-
-- ビルドしたゲームランチャーのROMを起動し、動作チェック
-
-- ゲームランチャーのROMをzip化
-  - 【注意】下の画像のファイルたちを全選択し、ZIPファイルを選択
-
-![alt text](ReadmeImages/21.png)
-
-- 生成されたzipファイルの名前は先ほど命名した「GameLauncher_vX.Y.Z」と同じ名前にする
+![alt text](ReadmeImages/14.png)
 
 - 下記URLにゲームランチャー.zipをアップロード
   - https://github.com/Ukun115/StudentProductions/releases/tag/GameLauncher
