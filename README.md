@@ -9,7 +9,7 @@
   - PVが望ましい
   - 100MB以下の制限あり。60sくらいの動画だったら大丈夫なはず。
 - Unityバージョン(6000.3.9f1を使用しています。下記リンクからDLしましょう。)
-  - [https://unity.com/releases/editor/whats-new/6000.3.0f1](https://unity.com/ja/releases/editor/whats-new/6000.3.9f1)
+  - https://unity.com/ja/releases/editor/whats-new/6000.3.9f1
 - ゲームランチャーの開発リポジトリをクローン
   - やり方は下記に記載
  
