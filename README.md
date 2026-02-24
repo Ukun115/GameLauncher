@@ -6,8 +6,8 @@
 - ゲーム動画
   - PVが望ましい
   - 100MB以下の制限あり。60sくらいの動画だったら大丈夫なはず。
-- Unityバージョン(6000.0.58f2を使用しています。下記リンクからDLしましょう。)
-  - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
+- Unityバージョン(6000.3.0f1を使用しています。下記リンクからDLしましょう。)
+  - https://unity.com/releases/editor/whats-new/6000.3.0f1
 - ゲームランチャーのリポジトリをクローン
   - やり方は下記に記載
  
@@ -29,42 +29,17 @@
   - 【注意】Unity6000.0.58f2を使用しています。下記リンクからDLしましょう。
   - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
 
-- Assets/Resources/Videosの中にゲーム動画を格納
-  - 動画ファイル名をゲームのナンバリングに沿って命名変更
-  - ex) Video013.mp4
+- 下の画像のメニューからダイアログを表示し、学生作品の動画や情報を入力。全て入力し終わったら「実行」を押下。これで作品データ追加が完了です。
 
 ![alt text](ReadmeImages/2.png)
 
-- Assets/StudentProductions/MasterData/StudentProductionMaster.jsonの最後尾にマスターデータを追加
-  - 書き方は既存のマスターデータをマネてください。
-  - マスターデータの各項目は基本持たせてください。無い場合はnullでOK。
-
 ![alt text](ReadmeImages/3.png)
+
+- 下の画像のメニューからダイアログを表示し、次のバージョンを入力。入力出来たら「適応」を押下。これでバージョン更新完了です。
 
 ![alt text](ReadmeImages/4.png)
 
-- Assets/StudentProductions/MasterData/StudentProductionsMaster.assetを削除
-  - 古いScriptableObjectなので、Jsonに追加したマスターデータを含むScriptableObjectを作らないといけない
-
 ![alt text](ReadmeImages/5.png)
-
-- 下の画像からAssets/StudentProductions/MasterData/StudentProductionMaster.jsonを選択しJsonデータをインポート。新しいScriptableObjectを作成。
-
-![alt text](ReadmeImages/6.png)
-
-![alt text](ReadmeImages/7.png)
-
-- 参照が外れているので、Launtch.sceneのヒエラルキービューのStudentProductionsListCanvas/Panel/ScrollViewオブジェクトのStudentProductionsScrollView.csの学生作品マスターデータにアタッチ
-
-![alt text](ReadmeImages/25.png)
-
-![alt text](ReadmeImages/26.png)
-
-- Launch.sceneのヒエラルキービューのMainCanvas/VersionTextオブジェクトのTextMeshPro-Textのテキストを次のバージョン表記に変更し、シーンを保存。
-
-![alt text](ReadmeImages/8.png)
-
-![alt text](ReadmeImages/9.png)
 
 - 以上でUnity側の設定は終わり。
 
@@ -76,22 +51,22 @@
 
 - Releasesをクリック
 
-![alt text](ReadmeImages/10.png)
+![alt text](ReadmeImages/6.png)
 
 - 「Draft a new release」をクリック
 
-![alt text](ReadmeImages/11.png)
+![alt text](ReadmeImages/7.png)
 
 - タグ作成。「Create new tag」から新しいタグを作成。
   - ゲームごとに3桁でナンバリングしています。最新のナンバリングに+1した半角の値にしてください。
 
-![alt text](ReadmeImages/12.png)
+![alt text](ReadmeImages/8.png)
 
-![alt text](ReadmeImages/13.png)
+![alt text](ReadmeImages/9.png)
 
 - タイトルはタグと同じく番号を半角入力。
 
-![alt text](ReadmeImages/14.png)
+![alt text](ReadmeImages/10.png)
 
 - 概要記載
   - 卒年、作品名、制作者の3点を同じ形式で記入してください。
@@ -104,18 +79,18 @@
 
 制作者：河原 太郎
 
-![alt text](ReadmeImages/15.png)
+![alt text](ReadmeImages/11.png)
 
 - ROM(zip)を画像の箇所にD&D。
   - この時、ROM(zip)のフォルダ名はナンバリングと同じ名前にしておく。
   - ex) ナンバリングが013の場合、「013.zip」とする
   - アップロードには少々時間かかる
 
-![alt text](ReadmeImages/16.png)
+![alt text](ReadmeImages/12.png)
 
 - アップロード完了したら、「Publish release」を押下
 
-![alt text](ReadmeImages/17.png)
+![alt text](ReadmeImages/13.png)
 
 - 以上でゲームの格納は完了。
 
