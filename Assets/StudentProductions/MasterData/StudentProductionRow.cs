@@ -20,5 +20,15 @@
         /// 学生名
         /// </summary>
         public string StudentName;
+
+        /// <summary>
+        /// GoogleDrive上のゲームZipのFileID
+        /// </summary>
+        public string ExeFileId;
+
+        /// <summary>
+        /// GoogleDrive上の紹介動画のFileID
+        /// </summary>
+        public string VideoFileId;
     }
 }
