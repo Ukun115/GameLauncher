@@ -16,11 +16,6 @@ namespace Launcher
     public class Launch : MonoBehaviour
     {
         /// <summary>
-        /// GitHub リポジトリのベースURL（最後の / は付けない）
-        /// </summary>
-        private static readonly string GithubBaseUrl = "https://github.com/Ukun115/StudentProductions/releases/download";
-
-        /// <summary>
         /// .exeのファイル名
         /// </summary>
         private static readonly string ExeFileName = "Game.exe";
@@ -33,7 +28,7 @@ namespace Launcher
         [Header("オーバーレイ画像"), SerializeField]
         private GameObject _overlayImage;
 
-        [Header("ローディングキャンバスオブジェクト"),SerializeField]
+        [Header("ローディングキャンバスオブジェクト"), SerializeField]
         private GameObject _loadingCanvasObj;
 
         /// <summary>
@@ -120,31 +115,25 @@ namespace Launcher
         /// <summary>
         /// ランチング
         /// </summary>
-        public void Launching(string productionName)
+        public void Launching(int productionId, string exeFileId)
         {
             Debug.Log("ランチ開始");
-
-            // 非同期処理発火
-            LaunchTask(productionName).Forget();
+            LaunchTask(productionId, exeFileId).Forget();
         }
 
         /// <summary>
         /// ランチタスク
         /// </summary>
-        private async UniTask LaunchTask(string productionName)
+        private async UniTask LaunchTask(int productionId, string exeFileId)
         {
-            // インストール先フォルダ
+            var productionName = $"{productionId:D3}";
             var installDir = Path.Combine(gamesRootDir, productionName);
             var exePath = Path.Combine(installDir, ExeFileName);
-
-            Debug.Log(installDir);
-            Debug.Log(exePath);
 
             // 既にインストール済みならそのまま起動
             if (File.Exists(exePath))
             {
                 Debug.Log("既にDL済。起動。");
-
                 StartProcess(exePath, installDir);
                 return;
             }
@@ -152,31 +141,12 @@ namespace Launcher
             // ローディングUI表示
             _loadingCanvasObj.SetActive(true);
 
-            // 未インストールなら GitHub から DL → 解凍
-            var githubZipUrl = $"{GithubBaseUrl}/{productionName}/{productionName}{ZipExtention}";
+            var zipUrl = GoogleDriveClient.GetDirectDownloadUrl(exeFileId);
+            Debug.Log($"[Launch] DL URL: {zipUrl}  FileID: {exeFileId}");
             var zipPath = Path.Combine(tempDir, $"{productionName}{ZipExtention}");
 
-            // 作品ごとのキャッシュキー
-            var cacheKey = $"RealDownloadUrl_{productionName}";
-            string zipUrl;
-
-            // キャッシュがあれば使う
-            if (PlayerPrefs.HasKey(cacheKey))
-            {
-                zipUrl = PlayerPrefs.GetString(cacheKey);
-            }
-            // なければ解決してキャッシュに保存
-            else
-            {
-                // 最終的なURLを解決
-                zipUrl = await ResolveFinalUrl(githubZipUrl);
-                // キャッシュ保存
-                PlayerPrefs.SetString(cacheKey, zipUrl);
-                PlayerPrefs.Save();
-            }
-
             // =========================
-            // DL/解凍 進捗の合成（任意）
+            // DL/解凍 進捗の合成
             // =========================
             const float DL_WEIGHT = 0.75f;
             const float UNZIP_WEIGHT = 0.25f;
@@ -185,8 +155,7 @@ namespace Launcher
 
             void ReportTotal()
             {
-                var total = dl * DL_WEIGHT + uz * UNZIP_WEIGHT;
-                OnTotalProgress?.Invoke(total);
+                OnTotalProgress?.Invoke(dl * DL_WEIGHT + uz * UNZIP_WEIGHT);
             }
 
             // =========================
@@ -196,7 +165,6 @@ namespace Launcher
             {
                 OnStatus?.Invoke("Downloading...");
 
-                // ★重要：githubZipUrl ではなく zipUrl を使う（解決した最終URL）
                 await DownloadToFileWithProgress(
                     zipUrl,
                     zipPath,
@@ -213,42 +181,10 @@ namespace Launcher
             }
             catch (Exception e)
             {
-                // TODO:iseki UIでエラー表示
                 Debug.LogError($"ネットワークリクエスト失敗: {e.Message}");
-
-                // キャッシュURLが古い可能性があるので、1回だけキャッシュ破棄→再解決→再DL
-                PlayerPrefs.DeleteKey(cacheKey);
-
                 CleanupZipIfExists(zipPath);
-
-                try
-                {
-                    zipUrl = await ResolveFinalUrl(githubZipUrl);
-                    PlayerPrefs.SetString(cacheKey, zipUrl);
-                    PlayerPrefs.Save();
-
-                    OnStatus?.Invoke("Downloading...");
-
-                    await DownloadToFileWithProgress(
-                        zipUrl,
-                        zipPath,
-                        p =>
-                        {
-                            dl = p;
-                            OnDownloadProgress?.Invoke(p);
-                            ReportTotal();
-                        },
-                        this.GetCancellationTokenOnDestroy()
-                    );
-
-                    Debug.Log("ネットワークリクエスト成功");
-                }
-                catch (Exception e2)
-                {
-                    Debug.LogError($"ネットワークリクエスト失敗: {e2.Message}");
-                    CleanupZipIfExists(zipPath);
-                    return;
-                }
+                _loadingCanvasObj.SetActive(false);
+                return;
             }
 
             // 既に同名フォルダがあれば削除（再インストール想定）
@@ -280,7 +216,7 @@ namespace Launcher
                     this.GetCancellationTokenOnDestroy()
                 );
             }
-            catch (System.Exception exception)
+            catch (Exception)
             {
                 if (Directory.Exists(installDir))
                 {
@@ -340,38 +276,10 @@ namespace Launcher
         /// <summary>
         /// インストール済みかどうか（UIで出し分けに使える）
         /// </summary>
-        public bool IsInstalled(string productionName)
+        public bool IsInstalled(int productionId)
         {
-            var installDir = Path.Combine(gamesRootDir, productionName);
-            var exePath = Path.Combine(installDir, ExeFileName);
+            var exePath = Path.Combine(gamesRootDir, $"{productionId:D3}", ExeFileName);
             return File.Exists(exePath);
-        }
-
-        /// <summary>
-        /// 最終的なURLを解決する
-        /// </summary>
-        /// <param name="url"> URL </param>
-        /// <returns> 最終的なURL </returns>
-        private async UniTask<string> ResolveFinalUrl(string url)
-        {
-            // 1バイトだけ取得するリクエストを送る（リダイレクト先を取得するため）
-            using var req = UnityWebRequest.Get(url);
-            req.SetRequestHeader("Range", "bytes=0-0");
-            req.downloadHandler = new DownloadHandlerBuffer();
-
-            // Webリクエスト送信を待つ
-            await req.SendWebRequest();
-
-            // エラーチェック
-            if (req.result != UnityWebRequest.Result.Success)
-            {
-                throw new System.Exception($"Resolve failed: {req.error}");
-            }
-
-            Debug.Log("ネットワークリクエスト成功");
-
-            // リダイレクト先URLを返す(objects.githubusercontent.com)
-            return req.url;
         }
 
         /// <summary>
