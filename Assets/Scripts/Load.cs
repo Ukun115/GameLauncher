@@ -17,13 +17,16 @@ namespace Launcher
         [Header("ローディングテキスト"), SerializeField]
         private TextMeshProUGUI _progressValueText;
 
+        [Header("ステータステキスト"), SerializeField]
+        private TextMeshProUGUI _statusText;
+
         /// <summary>
         /// アクティブ化時の処理
         /// </summary>
         private void OnEnable()
         {
-            // 総合進捗イベント登録
             Launch.Instance.OnTotalProgress += HandleTotalProgress;
+            Launch.Instance.OnStatus += HandleStatus;
         }
 
         /// <summary>
@@ -31,22 +34,20 @@ namespace Launcher
         /// </summary>
         private void OnDisable()
         {
-            // 総合進捗イベント解除
             Launch.Instance.OnTotalProgress -= HandleTotalProgress;
+            Launch.Instance.OnStatus -= HandleStatus;
         }
 
-        /// <summary>
-        /// 総合進捗ハンドラ
-        /// </summary>
-        /// <param name="progress"> 進捗（0.0～1.0） </param>
         private void HandleTotalProgress(float progress)
         {
-            // スライダー更新
-            // NOTE:iseki 念のためクランプ
             _slider.value = Mathf.Clamp01(progress);
-
-            // テキスト更新
             _progressValueText.text = $"{Mathf.Clamp01(progress) * 100f:0}%";
+        }
+
+        private void HandleStatus(string status)
+        {
+            if (_statusText != null)
+                _statusText.text = status;
         }
     }
 }

@@ -1,9 +1,6 @@
-using System;
 using System.IO;
-using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
@@ -27,9 +24,11 @@ namespace Launcher
         private TextMeshProUGUI _productionAndStudentName;
 
         private int _productionId;
+        private string _productionName;
         private string _exeFileId;
 
-        private string VideoCacheDir => Path.Combine(Application.persistentDataPath, "Videos");
+        public static string VideoCacheDir => Path.Combine(Application.persistentDataPath, "Videos");
+        public static string GetCachePath(int productionId) => Path.Combine(VideoCacheDir, $"{productionId:D3}.mp4");
 
         private void Awake()
         {
@@ -42,68 +41,28 @@ namespace Launcher
         public void Initialize(int productionId, string productionName, string studentName, string videoFileId, string exeFileId)
         {
             _productionId = productionId;
+            _productionName = productionName;
             _exeFileId = exeFileId;
             _productionAndStudentName.text = $"タイトル：{productionName}　開発者：{studentName}";
-            SetupVideo(videoFileId).Forget();
+            SetupVideo();
         }
 
         private void OnClickedButton()
         {
-            Launch.Instance.Launching(_productionId, _exeFileId);
+            Launch.Instance.Launching(_productionId, _productionName, _exeFileId);
         }
 
-        private async UniTaskVoid SetupVideo(string videoFileId)
+        private void SetupVideo()
         {
-            if (string.IsNullOrEmpty(videoFileId)) return;
+            var cachePath = GetCachePath(_productionId);
+            if (!File.Exists(cachePath)) return;
 
-            var cachePath = Path.Combine(VideoCacheDir, $"{_productionId:D3}.mp4");
-
-            if (!File.Exists(cachePath))
-            {
-                var downloaded = await DownloadVideoAsync(videoFileId, cachePath);
-                if (!downloaded) return;
-            }
-
-            ApplyVideoToPlayer(cachePath);
-        }
-
-        private async UniTask<bool> DownloadVideoAsync(string fileId, string cachePath)
-        {
-            Directory.CreateDirectory(VideoCacheDir);
-
-            var url = GoogleDriveClient.GetDirectDownloadUrl(fileId);
-            Debug.Log($"[GameVideoCell] DL URL: {url}  FileID: {fileId}");
-            using var req = UnityWebRequest.Get(url);
-            req.downloadHandler = new DownloadHandlerBuffer();
-
-            try
-            {
-                await req.SendWebRequest().ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[GameVideoCell] 動画DL失敗: {e.Message}");
-                return false;
-            }
-
-            if (req.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError($"[GameVideoCell] 動画DL失敗: {req.error}");
-                return false;
-            }
-
-            File.WriteAllBytes(cachePath, req.downloadHandler.data);
-            return true;
-        }
-
-        private void ApplyVideoToPlayer(string localPath)
-        {
             var renderTexture = new RenderTexture(1920, 1080, 24);
             _videoPlayer.targetTexture = renderTexture;
             _rawImage.texture = renderTexture;
 
             _videoPlayer.source = VideoSource.Url;
-            _videoPlayer.url = $"file://{localPath}";
+            _videoPlayer.url = $"file://{cachePath}";
             _videoPlayer.Play();
         }
     }

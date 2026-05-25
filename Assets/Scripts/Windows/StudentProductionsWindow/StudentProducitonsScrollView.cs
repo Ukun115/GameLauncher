@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Launcher
@@ -25,7 +26,7 @@ namespace Launcher
             // 既にロード済みなら即表示、まだなら OnLoaded を待つ
             if (loader.Rows != null)
             {
-                BuildCells(loader.Rows);
+                BuildCellsAsync(loader.Rows).Forget();
             }
             else
             {
@@ -42,7 +43,15 @@ namespace Launcher
         private void OnMasterDataLoaded()
         {
             MasterDataLoader.Instance.OnLoaded -= OnMasterDataLoaded;
-            BuildCells(MasterDataLoader.Instance.Rows);
+            BuildCellsAsync(MasterDataLoader.Instance.Rows).Forget();
+        }
+
+        private async UniTaskVoid BuildCellsAsync(StudentProductionRow[] rows)
+        {
+            // 動画を一括DLしてからセルを生成する
+            if (Launch.Instance != null)
+                await Launch.Instance.PrefetchVideosAsync(rows);
+            BuildCells(rows);
         }
 
         private void BuildCells(StudentProductionRow[] rows)

@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -115,16 +116,16 @@ namespace Launcher
         /// <summary>
         /// ランチング
         /// </summary>
-        public void Launching(int productionId, string exeFileId)
+        public void Launching(int productionId, string gameName, string exeFileId)
         {
             Debug.Log("ランチ開始");
-            LaunchTask(productionId, exeFileId).Forget();
+            LaunchTask(productionId, gameName, exeFileId).Forget();
         }
 
         /// <summary>
         /// ランチタスク
         /// </summary>
-        private async UniTask LaunchTask(int productionId, string exeFileId)
+        private async UniTask LaunchTask(int productionId, string gameName, string exeFileId)
         {
             var productionName = $"{productionId:D3}";
             var installDir = Path.Combine(gamesRootDir, productionName);
@@ -163,7 +164,7 @@ namespace Launcher
             // =========================
             try
             {
-                OnStatus?.Invoke("Downloading...");
+                OnStatus?.Invoke($"ゲームをダウンロード中...\n{gameName}");
 
                 await DownloadToFileWithProgress(
                     zipUrl,
@@ -202,7 +203,7 @@ namespace Launcher
                 // =========================
                 // Zipファイル展開（進捗取得）
                 // =========================
-                OnStatus?.Invoke("Extracting...");
+                OnStatus?.Invoke($"ファイルを展開中...\n{gameName}");
 
                 await ExtractZipWithProgress(
                     zipPath,
@@ -283,6 +284,70 @@ namespace Launcher
         }
 
         /// <summary>
+        /// 起動時に未キャッシュの動画を1本ずつ順番にDLする
+        /// </summary>
+        public async UniTask PrefetchVideosAsync(StudentProductionRow[] rows)
+        {
+            if (rows == null || rows.Length == 0) return;
+
+            Directory.CreateDirectory(GameVideoCell.VideoCacheDir);
+
+            var pending = new List<(int id, string fileId, string gameName)>();
+            foreach (var row in rows)
+            {
+                if (string.IsNullOrEmpty(row.VideoFileId)) continue;
+                if (!File.Exists(GameVideoCell.GetCachePath(row.ProductionID)))
+                    pending.Add((row.ProductionID, row.VideoFileId, row.GameName));
+            }
+
+            if (pending.Count == 0) return;
+
+            _loadingCanvasObj.SetActive(true);
+
+            var progresses = new float[pending.Count];
+            int completed = 0;
+
+            async UniTask DownloadOne(int i)
+            {
+                var (id, fileId, gameName) = pending[i];
+                var cachePath = GameVideoCell.GetCachePath(id);
+                var url = GoogleDriveClient.GetDirectDownloadUrl(fileId);
+                OnStatus?.Invoke($"動画をダウンロード中... ({completed}/{pending.Count})\n{gameName}");
+                try
+                {
+                    await DownloadToFileWithProgress(url, cachePath, p =>
+                    {
+                        progresses[i] = p;
+                        float sum = 0f;
+                        for (int j = 0; j < progresses.Length; j++) sum += progresses[j];
+                        OnTotalProgress?.Invoke(sum / progresses.Length);
+                    }, this.GetCancellationTokenOnDestroy());
+                    completed++;
+                    OnStatus?.Invoke($"動画をダウンロード中... ({completed}/{pending.Count})\n{gameName}");
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[Launch] 動画DL失敗 ID:{id:D3} {e.Message}");
+                    if (File.Exists(cachePath)) File.Delete(cachePath);
+                    progresses[i] = 1f;
+                    completed++;
+                }
+            }
+
+            try
+            {
+                for (int i = 0; i < pending.Count; i++)
+                    await DownloadOne(i);
+            }
+            finally
+            {
+                OnTotalProgress?.Invoke(1f);
+                _loadingCanvasObj.SetActive(false);
+            }
+        }
+
+
+        /// <summary>
         /// ZipをDLしつつ進捗を取る
         /// </summary>
         private async UniTask DownloadToFileWithProgress(
@@ -293,46 +358,17 @@ namespace Launcher
         {
             Directory.CreateDirectory(Path.GetDirectoryName(savePath));
 
-            // Content-Length を HEAD で取得（取れないこともある）
-            long totalBytes = -1;
-            using (var head = UnityWebRequest.Head(url))
-            {
-                await head.SendWebRequest().ToUniTask(cancellationToken: token);
-                if (head.result == UnityWebRequest.Result.Success)
-                {
-                    var lenStr = head.GetResponseHeader("Content-Length");
-                    if (!string.IsNullOrEmpty(lenStr) && long.TryParse(lenStr, out var len))
-                        totalBytes = len;
-                }
-            }
-
-            long receivedBytes = 0;
-
             using var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            var handler = new FileStreamDownloadHandler(fs, chunkLen =>
-            {
-                receivedBytes += chunkLen;
-                if (totalBytes > 0)
-                    onProgress?.Invoke(Mathf.Clamp01((float)receivedBytes / totalBytes));
-            });
-
             using var req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbGET)
             {
-                downloadHandler = handler
+                downloadHandler = new FileStreamDownloadHandler(fs),
+                disposeDownloadHandlerOnDispose = true
             };
 
-            // これは付けても付けなくてもOK（付けるとUnityがhandlerをDisposeする）
-            // Disposeをoverrideしてないので問題なし
-            req.disposeDownloadHandlerOnDispose = true;
-
             var op = req.SendWebRequest();
-
-            // totalBytesが取れない場合は目安としてUnityのdownloadProgressを使う
             while (!op.isDone)
             {
-                if (totalBytes <= 0)
-                    onProgress?.Invoke(req.downloadProgress);
-
+                onProgress?.Invoke(Mathf.Max(0f, req.downloadProgress));
                 await UniTask.Yield(PlayerLoopTiming.Update, token);
             }
 
@@ -348,28 +384,18 @@ namespace Launcher
         private sealed class FileStreamDownloadHandler : DownloadHandlerScript
         {
             private readonly FileStream _fs;
-            private readonly Action<int> _onChunk;
 
-            public FileStreamDownloadHandler(FileStream fs, Action<int> onChunk, int bufferSize = 64 * 1024)
-                : base(new byte[bufferSize])
-            {
-                _fs = fs;
-                _onChunk = onChunk;
-            }
+            public FileStreamDownloadHandler(FileStream fs, int bufferSize = 64 * 1024)
+                : base(new byte[bufferSize]) => _fs = fs;
 
             protected override bool ReceiveData(byte[] data, int dataLength)
             {
                 if (data == null || dataLength <= 0) return false;
-
                 _fs.Write(data, 0, dataLength);
-                _onChunk?.Invoke(dataLength);
                 return true;
             }
 
-            protected override void CompleteContent()
-            {
-                _fs.Flush();
-            }
+            protected override void CompleteContent() => _fs.Flush();
         }
 
 

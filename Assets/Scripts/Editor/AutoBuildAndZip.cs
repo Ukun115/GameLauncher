@@ -12,11 +12,22 @@ namespace Launcher
     /// </summary>
     public static class AutoBuildAndZip
     {
-        private const string MenuPath = "更新/手順3.ビルド→バイナリ.zip作成";
+        private const string MenuBase = "更新/手順3.ビルド→バイナリ.zip作成/";
         private static readonly string ProductFolderPrefix = "GameLauncher_v";
 
-        [MenuItem(MenuPath)]
-        public static void BuildAndCreateZip()
+        [MenuItem(MenuBase + "Windows")]
+        public static void BuildAndCreateZipForWindows()
+        {
+            BuildAndCreateZip(BuildTarget.StandaloneWindows64, "Win");
+        }
+
+        [MenuItem(MenuBase + "Mac")]
+        public static void BuildAndCreateZipForMac()
+        {
+            BuildAndCreateZip(BuildTarget.StandaloneOSX, "Mac");
+        }
+
+        private static void BuildAndCreateZip(BuildTarget target, string platformSuffix)
         {
             // 1) Version 取得（ProjectSettings > Player > Version）
             var version = PlayerSettings.bundleVersion;
@@ -31,8 +42,8 @@ namespace Launcher
                 return;
             }
 
-            // 3) 出力フォルダ: Downloads/GameLauncher_v#.#.#/
-            var outRootFolderName = $"{ProductFolderPrefix}{version}";
+            // 3) 出力フォルダ: Downloads/GameLauncher_v#.#.#_Win/ or _Mac/
+            var outRootFolderName = $"{ProductFolderPrefix}{version}_{platformSuffix}";
             var outRootPath = Path.Combine(downloadsPath, outRootFolderName);
 
             // 4) シーン収集（Build Settings の有効シーン）
@@ -60,14 +71,13 @@ namespace Launcher
                 return;
             }
 
-            // 6) プラットフォーム別の出力パス決定（BuildPipeline は「ファイルパス」を要求する場合あり）
-            var target = EditorUserBuildSettings.activeBuildTarget;
+            // 6) プラットフォーム別の出力パス決定
             var locationPathName = GetLocationPathName(outRootPath, target);
 
             // 7) ビルド実行
             try
             {
-                EditorUtility.DisplayProgressBar("Auto Build", "Building player...", 0.3f);
+                EditorUtility.DisplayProgressBar("Auto Build", $"Building player ({platformSuffix})...", 0.3f);
 
                 var options = new BuildPlayerOptions
                 {
@@ -82,6 +92,15 @@ namespace Launcher
                 {
                     EditorUtility.ClearProgressBar();
                     EditorUtility.DisplayDialog("ビルド失敗", $"BuildResult: {report.summary.result}", "OK");
+                    return;
+                }
+
+                // ビルド成功と報告されてもモジュール未インストール等で出力が空になるケースがあるため確認
+                if (!File.Exists(locationPathName) && !Directory.Exists(locationPathName))
+                {
+                    EditorUtility.ClearProgressBar();
+                    EditorUtility.DisplayDialog("ビルド失敗",
+                        $"ビルド出力が見つかりませんでした。\n{platformSuffix} Build Support モジュールが Unity Hub でインストールされているか確認してください。\n\n期待パス: {locationPathName}", "OK");
                     return;
                 }
             }
@@ -101,7 +120,6 @@ namespace Launcher
                 if (File.Exists(zipPath))
                     File.Delete(zipPath);
 
-                // outRootPath フォルダを zip 化
                 ZipFile.CreateFromDirectory(
                     outRootPath,
                     zipPath,
@@ -133,8 +151,6 @@ namespace Launcher
 
         private static string GetDownloadsPath()
         {
-            // Windows/Mac/Linux の一般的な Downloads を狙う
-            // ユーザー環境で変わる可能性はありますが、まずはここで。
             var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             if (string.IsNullOrEmpty(home))
                 return null;
@@ -144,11 +160,6 @@ namespace Launcher
 
         private static string GetLocationPathName(string outRootPath, BuildTarget target)
         {
-            // 「GameLauncher_v#.#.# の直下にビルドデータ」という要件に合わせて
-            // outRootPath の直下に実行物が来るようにする
-            // ※ BuildTarget によって locationPathName の形式が違う
-
-            // 製品名は PlayerSettings.productName から取る（空ならフォルダ名）
             var productName = string.IsNullOrWhiteSpace(PlayerSettings.productName)
                 ? Path.GetFileName(outRootPath)
                 : PlayerSettings.productName;
@@ -160,16 +171,12 @@ namespace Launcher
                     return Path.Combine(outRootPath, $"{productName}.exe");
 
                 case BuildTarget.StandaloneOSX:
-                    // macOS は .app（フォルダ扱い）を outRootPath 直下に生成
                     return Path.Combine(outRootPath, $"{productName}.app");
 
                 case BuildTarget.StandaloneLinux64:
-                    // Linux は拡張子なしが一般的
                     return Path.Combine(outRootPath, productName);
 
                 default:
-                    // それ以外はフォルダ出力が必要なケースもあるので、フォルダを返してみる
-                    // （必要に応じて target ごとに分岐追加してください）
                     return Path.Combine(outRootPath, productName);
             }
         }
