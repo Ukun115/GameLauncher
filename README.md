@@ -1,21 +1,20 @@
 # 【ゲーム追加フロー】
 ## 【準備物編】
-- 追加するゲームの情報
-  - リスト：ゲーム名、学生名、卒業年、イベント種類(UnityGameJam、ぷちコン、カッパ杯Summarなど)、チーム/個人、ゲームジャンル、ゲームエンジン、ゲームの説明文、更新日(追加日)
 - ROM(zip)
   - Releaseでビルドしたやつ
   - エラー落ちしないかどうか必ず確認
 - ゲーム動画
   - PVが望ましい
   - 100MB以下の制限あり。60sくらいの動画だったら大丈夫なはず。
-- Unityバージョン(6000.3.9f1を使用しています。下記リンクからDLしましょう。)
-  - https://unity.com/ja/releases/editor/whats-new/6000.3.9f1
-- ゲームランチャーの開発リポジトリをクローン
+- Unityバージョン(6000.0.58f2を使用しています。下記リンクからDLしましょう。)
+  - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
+- ゲームランチャーのリポジトリをクローン
   - やり方は下記に記載
  
 ## 【GitGUI編】
 - 下記リンクからリポジトリを落としてくる。
   - https://github.com/Ukun115/GameLauncher
+  - privateアクセスなので、伊関からコラボレーターとしてリポジトリに参加しないと「404 not found」が出てきます。
   - 【注意】zipをDLしてこないよう注意。リポジトリをクローンしてください。
 - GitGUIはおそらく「Fork」を使用するはず
 - 最新mainから作業ブランチ作成
@@ -27,20 +26,45 @@
 ## 【Unity編】
 - UnityHubからGameLauncher起動。
   - 起動出来たらAssets/Scenes/Launch.unityからシーンを開く。
-  
-- 下の画像のメニューからダイアログを表示し、学生作品の動画や情報を入力。全て入力し終わったら「実行」を押下。これで作品データ追加が完了です。
+  - 【注意】Unity6000.0.58f2を使用しています。下記リンクからDLしましょう。
+  - https://unity.com/ja/releases/editor/whats-new/6000.0.58f2
+
+- Assets/Resources/Videosの中にゲーム動画を格納
+  - 動画ファイル名をゲームのナンバリングに沿って命名変更
+  - ex) Video013.mp4
 
 ![alt text](ReadmeImages/2.png)
 
-![alt text](ReadmeImages/3.png)
+- Assets/StudentProductions/MasterData/StudentProductionMaster.jsonの最後尾にマスターデータを追加
+  - 書き方は既存のマスターデータをマネてください。
+  - マスターデータの各項目は基本持たせてください。無い場合はnullでOK。
 
-- 下の画像のメニューからダイアログを表示し、次のバージョンを入力。入力出来たら「適応」を押下。これでバージョン更新完了です。
-  - 自分のバージョンがどのバージョンになるかは下記リンクを参照。
-  - https://github.com/Ukun115/StudentProductions?tab=readme-ov-file#%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E8%A1%A8%E8%A8%98%E8%A6%8F%E5%89%87
+![alt text](ReadmeImages/3.png)
 
 ![alt text](ReadmeImages/4.png)
 
+- Assets/StudentProductions/MasterData/StudentProductionsMaster.assetを削除
+  - 古いScriptableObjectなので、Jsonに追加したマスターデータを含むScriptableObjectを作らないといけない
+
 ![alt text](ReadmeImages/5.png)
+
+- 下の画像からAssets/StudentProductions/MasterData/StudentProductionMaster.jsonを選択しJsonデータをインポート。新しいScriptableObjectを作成。
+
+![alt text](ReadmeImages/6.png)
+
+![alt text](ReadmeImages/7.png)
+
+- 参照が外れているので、Launtch.sceneのヒエラルキービューのStudentProductionsListCanvas/Panel/ScrollViewオブジェクトのStudentProductionsScrollView.csの学生作品マスターデータにアタッチ
+
+![alt text](ReadmeImages/25.png)
+
+![alt text](ReadmeImages/26.png)
+
+- Launch.sceneのヒエラルキービューのMainCanvas/VersionTextオブジェクトのTextMeshPro-Textのテキストを次のバージョン表記に変更し、シーンを保存。
+
+![alt text](ReadmeImages/8.png)
+
+![alt text](ReadmeImages/9.png)
 
 - 以上でUnity側の設定は終わり。
 
@@ -52,22 +76,22 @@
 
 - Releasesをクリック
 
-![alt text](ReadmeImages/6.png)
+![alt text](ReadmeImages/10.png)
 
 - 「Draft a new release」をクリック
 
-![alt text](ReadmeImages/7.png)
+![alt text](ReadmeImages/11.png)
 
 - タグ作成。「Create new tag」から新しいタグを作成。
   - ゲームごとに3桁でナンバリングしています。最新のナンバリングに+1した半角の値にしてください。
 
-![alt text](ReadmeImages/8.png)
+![alt text](ReadmeImages/12.png)
 
-![alt text](ReadmeImages/9.png)
+![alt text](ReadmeImages/13.png)
 
 - タイトルはタグと同じく番号を半角入力。
 
-![alt text](ReadmeImages/10.png)
+![alt text](ReadmeImages/14.png)
 
 - 概要記載
   - 卒年、作品名、制作者の3点を同じ形式で記入してください。
@@ -80,34 +104,52 @@
 
 制作者：河原 太郎
 
-![alt text](ReadmeImages/11.png)
+![alt text](ReadmeImages/15.png)
 
 - ROM(zip)を画像の箇所にD&D。
   - この時、ROM(zip)のフォルダ名はナンバリングと同じ名前にしておく。
   - ex) ナンバリングが013の場合、「013.zip」とする
   - アップロードには少々時間かかる
 
-![alt text](ReadmeImages/12.png)
+![alt text](ReadmeImages/16.png)
 
 - アップロード完了したら、「Publish release」を押下
 
-![alt text](ReadmeImages/13.png)
+![alt text](ReadmeImages/17.png)
 
 - 以上でゲームの格納は完了。
 
-## 【動作チェック編】
 - 次にUnityEditorでのゲーム起動確認を行う。
+
+## 【ゲームランチャービルド編】
 - 実行。追加したゲームのセルをクリックし待機。数分後にゲームが起動します。
+  - このドキュメントを書いているときはゲームランチャーにDL状況のプログレスバーなどが未実装のため視覚的に分かりにくいです。ごめん。
   - DLされたゲームの格納場所は下記パスにあります。一度確認してみましょう。
   - C:\Users"ユーザー名"\AppData\LocalLow\DefaultCompany\GameLauncher\Games
   - 「temp」フォルダはDLしてきたzipが格納されるフォルダ。「Games」フォルダは解凍したROMが格納されるフォルダ。
+- ビルド
+![alt text](ReadmeImages/18.png)
+![alt text](ReadmeImages/19.png)
 
-## 【ゲームランチャービルド編】
-- 下の画像のメニューからビルド&Zip化(ビルドしたROMはダウンロードに生成されます)
+- ゲームランチャーのフォルダを作成し、作成したフォルダを選択
+  - フォルダ名は「GameLauncher_vX.Y.Z」のようにする
+  - 作ろうとしているバージョン名に合わせよう！自分のバージョンがどのバージョンになるかは下記リンクを参照。
+  - https://github.com/Ukun115/StudentProductions?tab=readme-ov-file#%E3%82%B2%E3%83%BC%E3%83%A0%E3%83%A9%E3%83%B3%E3%83%81%E3%83%A3%E3%83%BC%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E8%A1%A8%E8%A8%98%E8%A6%8F%E5%89%87
 
-![alt text](ReadmeImages/14.png)
+![alt text](ReadmeImages/20.png)
 
-- ビルドしたゲームランチャーのROMを展開し起動。動作チェックをしましょう。
+- 下記フォルダ名のフォルダは不要なので削除
+  - GameLauncher_BurstDebugInformation_DoNotShip
+
+- ビルドしたゲームランチャーのROMを起動し、動作チェック
+
+- ゲームランチャーのROMをzip化
+  - 【注意】下の画像のファイルたちを全選択し、ZIPファイルを選択
+
+![alt text](ReadmeImages/21.png)
+
+- 生成されたzipファイルの名前は先ほど命名した「GameLauncher_vX.Y.Z」と同じ名前にする
+
 - 下記URLにゲームランチャー.zipをアップロード
   - https://github.com/Ukun115/StudentProductions/releases/tag/GameLauncher
   - 【注意】過去バージョンのゲームランチャー.zipを削除しない
