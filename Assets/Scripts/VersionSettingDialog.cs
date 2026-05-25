@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 namespace Launcher
@@ -56,3 +57,5 @@ namespace Launcher
         }
     }
 }
+
+#endif
