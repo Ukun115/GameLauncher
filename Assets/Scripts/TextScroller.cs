@@ -109,7 +109,7 @@ namespace Launcher
                 await UniTask.Delay(TimeSpan.FromSeconds(_waitTimeAfterScroll),cancellationToken: token);
 
                 // フェードイン
-                await _canvasGroup.DOFade(0,_fadeDuration).SetEase(Ease.Linear);
+                await _canvasGroup.DOFade(0,_fadeDuration).SetEase(Ease.Linear).ToUniTask(cancellationToken: token);
 
                 // 位置リセット
                 _textRectTransform.anchoredPosition = _startPosition;

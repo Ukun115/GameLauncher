@@ -384,16 +384,25 @@ namespace Launcher
         private sealed class FileStreamDownloadHandler : DownloadHandlerScript
         {
             private readonly FileStream _fs;
+            private ulong _totalBytes;
+            private ulong _receivedBytes;
 
             public FileStreamDownloadHandler(FileStream fs, int bufferSize = 64 * 1024)
                 : base(new byte[bufferSize]) => _fs = fs;
+
+            protected override void ReceiveContentLengthHeader(ulong contentLength)
+                => _totalBytes = contentLength;
 
             protected override bool ReceiveData(byte[] data, int dataLength)
             {
                 if (data == null || dataLength <= 0) return false;
                 _fs.Write(data, 0, dataLength);
+                _receivedBytes += (ulong)dataLength;
                 return true;
             }
+
+            protected override float GetProgress()
+                => _totalBytes > 0 ? Mathf.Clamp01((float)_receivedBytes / _totalBytes) : 0f;
 
             protected override void CompleteContent() => _fs.Flush();
         }
