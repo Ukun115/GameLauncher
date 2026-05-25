@@ -123,6 +123,87 @@ namespace Launcher
         }
 
         /// <summary>
+        /// 未インストールのゲームを全て順番にDL＆解凍する
+        /// </summary>
+        public async UniTask PrefetchGamesAsync(StudentProductionRow[] rows)
+        {
+            if (rows == null || rows.Length == 0) return;
+
+            var pending = new List<(int id, string fileId, string gameName)>();
+            foreach (var row in rows)
+            {
+                if (string.IsNullOrEmpty(row.ExeFileId)) continue;
+                var exePath = Path.Combine(gamesRootDir, $"{row.ProductionID:D3}", ExeFileName);
+                if (!File.Exists(exePath))
+                    pending.Add((row.ProductionID, row.ExeFileId, row.GameName));
+            }
+
+            if (pending.Count == 0) return;
+
+            _loadingCanvasObj.SetActive(true);
+
+            const float DL_WEIGHT = 0.75f;
+            const float UNZIP_WEIGHT = 0.25f;
+
+            for (int i = 0; i < pending.Count; i++)
+            {
+                var (id, fileId, gameName) = pending[i];
+                var productionName = $"{id:D3}";
+                var installDir = Path.Combine(gamesRootDir, productionName);
+                var zipPath = Path.Combine(tempDir, $"{productionName}{ZipExtention}");
+
+                float dl = 0f, uz = 0f;
+                float fileBase = (float)i / pending.Count;
+                float fileSpan = 1f / pending.Count;
+                void ReportTotal() => OnTotalProgress?.Invoke(fileBase + fileSpan * (dl * DL_WEIGHT + uz * UNZIP_WEIGHT));
+
+                OnStatus?.Invoke($"ゲームをダウンロード中... ({i}/{pending.Count})\n{gameName}");
+
+                try
+                {
+                    await DownloadToFileWithProgress(
+                        GoogleDriveClient.GetDirectDownloadUrl(fileId),
+                        zipPath,
+                        p => { dl = p; ReportTotal(); },
+                        this.GetCancellationTokenOnDestroy()
+                    );
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[Launch] ゲームDL失敗 ID:{id:D3} {e.Message}");
+                    CleanupZipIfExists(zipPath);
+                    continue;
+                }
+
+                OnStatus?.Invoke($"ファイルを展開中... ({i + 1}/{pending.Count})\n{gameName}");
+
+                try
+                {
+                    if (Directory.Exists(installDir)) Directory.Delete(installDir, true);
+                    await ExtractZipWithProgress(
+                        zipPath,
+                        installDir,
+                        p => { uz = p; ReportTotal(); },
+                        this.GetCancellationTokenOnDestroy()
+                    );
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[Launch] ゲーム展開失敗 ID:{id:D3} {e.Message}");
+                    if (Directory.Exists(installDir)) Directory.Delete(installDir, true);
+                }
+                finally
+                {
+                    CleanupZipIfExists(zipPath);
+                }
+            }
+
+            OnTotalProgress?.Invoke(1f);
+            OnStatus?.Invoke("ダウンロード完了");
+            _loadingCanvasObj.SetActive(false);
+        }
+
+        /// <summary>
         /// ランチタスク
         /// </summary>
         private async UniTask LaunchTask(int productionId, string gameName, string exeFileId)

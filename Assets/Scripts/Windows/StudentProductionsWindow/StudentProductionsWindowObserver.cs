@@ -14,6 +14,9 @@ namespace Launcher
         [Header("戻るボタン"), SerializeField]
         private Button _returnButton;
 
+        [Header("一括DLボタン"), SerializeField]
+        private Button _bulkDownloadButton;
+
         /// <summary>
         /// Awake
         /// </summary>
@@ -31,6 +34,7 @@ namespace Launcher
             // 各ボタンクリック時のリスナー登録
             // NOTE:iseki ラムダ式じゃないとリスナー登録時にOnClickReturnButtonメソッドが呼ばれてしまう
             _returnButton.onClick.AddListener(() => _buttonListener.OnClickReturnButton().Forget());
+            _bulkDownloadButton.onClick.AddListener(_buttonListener.OnClickBulkDownloadButton);
         }
     }
 }

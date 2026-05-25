@@ -19,5 +19,20 @@ namespace Launcher
             await _cameraManager.MoveToPosition1Task();
             gameObject.SetActive(false);
         }
+
+        /// <summary>
+        /// 一括DLボタン押下時
+        /// </summary>
+        public void OnClickBulkDownloadButton()
+        {
+            BulkDownloadAsync().Forget();
+        }
+
+        private async UniTaskVoid BulkDownloadAsync()
+        {
+            var loader = MasterDataLoader.Instance;
+            if (loader?.Rows == null) return;
+            await Launch.Instance.PrefetchGamesAsync(loader.Rows);
+        }
     }
 }
