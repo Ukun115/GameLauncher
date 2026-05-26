@@ -16,6 +16,14 @@ namespace Launcher
             public int ProductionID;
             public string ProductionName;
             public string StudentName;
+            public int Grade;
+            public int GraduationYear;
+            public string EventType;
+            public string TeamOrSolo;
+            public string GameGenre;
+            public string NumberOfPlayers;
+            public string GameEngine;
+            public string GameDescription;
         }
 
         [SerializeField] private List<Entry> entries = new();
@@ -29,7 +37,20 @@ namespace Launcher
             if(rows == null) return;
             foreach(var r in rows)
             {
-                entries.Add(new Entry { ProductionID = r.ProductionID,StudentName = r.StudentName,ProductionName = r.GameName ?? string.Empty });
+                entries.Add(new Entry
+                {
+                    ProductionID   = r.ProductionID,
+                    ProductionName = r.GameName ?? string.Empty,
+                    StudentName    = r.StudentName,
+                    Grade          = r.Grade,
+                    GraduationYear = r.GraduationYear,
+                    EventType      = r.EventType,
+                    TeamOrSolo     = r.TeamOrSolo,
+                    GameGenre      = r.GameGenre,
+                    NumberOfPlayers = r.NumberOfPlayers,
+                    GameEngine     = r.GameEngine,
+                    GameDescription = r.GameDescription,
+                });
             }
             BuildIndex();
         }

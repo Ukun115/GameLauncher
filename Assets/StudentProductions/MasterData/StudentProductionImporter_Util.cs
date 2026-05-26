@@ -16,9 +16,24 @@ namespace Launcher
             string line = sr.ReadLine();
             if(line == null) throw new Exception("CSV empty");
             var headers = SplitCsv(line);
-            int idxId = Array.FindIndex(headers,h => string.Equals(h.Trim(),"ProductionID",StringComparison.OrdinalIgnoreCase));
-            int idxName = Array.FindIndex(headers,h => string.Equals(h.Trim(),"GameName",StringComparison.OrdinalIgnoreCase));
-            if(idxId < 0 || idxName < 0) throw new Exception("CSV headers must include ProductionID, GameName");
+
+            int Idx(string name) => Array.FindIndex(headers, h => string.Equals(h.Trim(), name, StringComparison.OrdinalIgnoreCase));
+
+            int idxId              = Idx("ProductionID");
+            int idxGameName        = Idx("GameName");
+            int idxStudentName     = Idx("StudentName");
+            int idxGrade           = Idx("Grade");
+            int idxGraduationYear  = Idx("GraduationYear");
+            int idxEventType       = Idx("EventType");
+            int idxTeamOrSolo      = Idx("TeamOrSolo");
+            int idxGameGenre       = Idx("GameGenre");
+            int idxNumberOfPlayers = Idx("NumberOfPlayers");
+            int idxGameEngine      = Idx("GameEngine");
+            int idxGameDescription = Idx("GameDescription");
+            int idxVideoFileId     = Idx("VideoFileId");
+            int idxExeFileId       = Idx("ExeFileId");
+
+            if(idxId < 0 || idxGameName < 0) throw new Exception("CSV headers must include ProductionID, GameName");
 
             while((line = sr.ReadLine()) != null)
             {
@@ -26,8 +41,19 @@ namespace Launcher
                 var cells = SplitCsv(line);
                 var row = new StudentProductionRow
                 {
-                    ProductionID = int.TryParse(GetCell(cells,idxId),out var id) ? id : 0,
-                    GameName = GetCell(cells,idxName),
+                    ProductionID    = int.TryParse(GetCell(cells, idxId), out var id) ? id : 0,
+                    GameName        = GetCell(cells, idxGameName),
+                    StudentName     = GetCell(cells, idxStudentName),
+                    Grade           = int.TryParse(GetCell(cells, idxGrade), out var grade) ? grade : 0,
+                    GraduationYear  = int.TryParse(GetCell(cells, idxGraduationYear), out var year) ? year : 0,
+                    EventType       = GetCell(cells, idxEventType),
+                    TeamOrSolo      = GetCell(cells, idxTeamOrSolo),
+                    GameGenre       = GetCell(cells, idxGameGenre),
+                    NumberOfPlayers = GetCell(cells, idxNumberOfPlayers),
+                    GameEngine      = GetCell(cells, idxGameEngine),
+                    GameDescription = GetCell(cells, idxGameDescription),
+                    VideoFileId     = GetCell(cells, idxVideoFileId),
+                    ExeFileId       = GetCell(cells, idxExeFileId),
                 };
                 list.Add(row);
             }

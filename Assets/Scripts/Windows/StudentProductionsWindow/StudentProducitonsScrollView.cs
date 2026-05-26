@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 namespace Launcher
@@ -14,8 +15,14 @@ namespace Launcher
         [Header("コンテンツトランスフォーム"), SerializeField]
         private Transform _contentTransform;
 
+        [Header("オフライン時エラーテキスト(ScreenCanvas/Text(TMP))"), SerializeField]
+        private TMP_Text _offlineErrorText;
+
         private void Start()
         {
+            if (_offlineErrorText != null)
+                _offlineErrorText.gameObject.SetActive(false);
+
             var loader = MasterDataLoader.Instance;
             if (loader == null)
             {
@@ -48,6 +55,12 @@ namespace Launcher
 
         private async UniTaskVoid BuildCellsAsync(StudentProductionRow[] rows)
         {
+            if (rows == null)
+            {
+                ShowOfflineError();
+                return;
+            }
+
             // 動画を一括DLしてからセルを生成する
             if (Launch.Instance != null)
                 await Launch.Instance.PrefetchVideosAsync(rows);
@@ -66,8 +79,15 @@ namespace Launcher
                 cell.name = $"{row.ProductionID:D3}";
 
                 var gameVideoCell = cell.GetComponent<GameVideoCell>();
-                gameVideoCell.Initialize(row.ProductionID, row.GameName, row.StudentName, row.VideoFileId, row.ExeFileId);
+                gameVideoCell.Initialize(row);
             }
+        }
+
+        private void ShowOfflineError()
+        {
+            if (_offlineErrorText == null) return;
+            _offlineErrorText.text = "オフラインのため、ゲーム一覧を表示できません。\nインターネットに接続して再起動してください。";
+            _offlineErrorText.gameObject.SetActive(true);
         }
     }
 }

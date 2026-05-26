@@ -5,8 +5,10 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 namespace Launcher
@@ -29,8 +31,16 @@ namespace Launcher
         [Header("オーバーレイ画像"), SerializeField]
         private GameObject _overlayImage;
 
+        [Header("ゲーム起動中のキャンセルボタン"), SerializeField]
+        private Button _cancelButton;
+
         [Header("ローディングキャンバスオブジェクト"), SerializeField]
         private GameObject _loadingCanvasObj;
+
+        [Header("エラーテキスト(ScreenCanvas/Text(TMP))"), SerializeField]
+        private TMP_Text _errorText;
+
+        private const float ErrorDisplaySeconds = 4f;
 
         /// <summary>
         /// シングルトン
@@ -97,6 +107,8 @@ namespace Launcher
             // ディレクトリ作成
             Directory.CreateDirectory(gamesRootDir);
             Directory.CreateDirectory(tempDir);
+
+            _cancelButton?.onClick.AddListener(CancelOverlay);
         }
 
         /// <summary>
@@ -106,11 +118,26 @@ namespace Launcher
         {
             // 起動したゲームが終了されたとき
             if (_process != null && _process.HasExited)
+                HideOverlay();
+        }
+
+        /// <summary>
+        /// ゲーム起動中オーバーレイを閉じてプロセスを終了する
+        /// </summary>
+        private void CancelOverlay()
+        {
+            if (_process != null && !_process.HasExited)
             {
-                // オーバーレイ非表示
-                _overlayImage.SetActive(false);
-                _process = null;
+                try { _process.Kill(); }
+                catch (Exception e) { Debug.LogWarning($"[Launch] プロセス終了失敗: {e.Message}"); }
             }
+            HideOverlay();
+        }
+
+        private void HideOverlay()
+        {
+            _overlayImage.SetActive(false);
+            _process = null;
         }
 
         /// <summary>
@@ -217,6 +244,13 @@ namespace Launcher
             {
                 Debug.Log("既にDL済。起動。");
                 StartProcess(exePath, installDir);
+                return;
+            }
+
+            // ローカルになし かつ オフライン → エラー表示して終了
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                ShowErrorAsync("ゲームがダウンロードされていません。\nインターネットに接続してから再度お試しください。").Forget();
                 return;
             }
 
@@ -337,22 +371,26 @@ namespace Launcher
         /// </summary>
         private void StartProcess(string exePath, string installDir)
         {
-            // プロセス情報
             var processStartInfo = new ProcessStartInfo
             {
-                FileName = exePath,             // .exeファイルパス
-                WorkingDirectory = installDir,  // インストールしたディレクトリ
+                FileName = exePath,
+                WorkingDirectory = installDir,
                 UseShellExecute = false
             };
 
-            // ローディングUI非表示
             _loadingCanvasObj.SetActive(false);
-
-            // オーバーレイ表示
             _overlayImage.SetActive(true);
 
-            // 起動
-            _process = Process.Start(processStartInfo);
+            try
+            {
+                _process = Process.Start(processStartInfo);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[Launch] プロセス起動失敗: {e.Message}");
+                ShowErrorAsync("ゲームを起動できませんでした。").Forget();
+                HideOverlay();
+            }
         }
 
         /// <summary>
@@ -545,6 +583,15 @@ namespace Launcher
             }
 
             onProgress?.Invoke(1f);
+        }
+
+        private async UniTaskVoid ShowErrorAsync(string message)
+        {
+            if (_errorText == null) return;
+            _errorText.text = message;
+            _errorText.gameObject.SetActive(true);
+            await UniTask.Delay(TimeSpan.FromSeconds(ErrorDisplaySeconds), cancellationToken: this.GetCancellationTokenOnDestroy());
+            _errorText.gameObject.SetActive(false);
         }
 
         private void CleanupZipIfExists(string zipPath)

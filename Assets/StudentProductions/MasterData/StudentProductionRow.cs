@@ -6,29 +6,18 @@
     [System.Serializable]
     public class StudentProductionRow
     {
-        /// <summary>
-        /// 作品ID
-        /// </summary>
         public int ProductionID;
-
-        /// <summary>
-        /// ゲーム名
-        /// </summary>
         public string GameName;
-
-        /// <summary>
-        /// 学生名
-        /// </summary>
         public string StudentName;
-
-        /// <summary>
-        /// GoogleDrive上のゲームZipのFileID
-        /// </summary>
-        public string ExeFileId;
-
-        /// <summary>
-        /// GoogleDrive上の紹介動画のFileID
-        /// </summary>
+        public int Grade;
+        public int GraduationYear;
+        public string EventType;
+        public string TeamOrSolo;
+        public string GameGenre;
+        public string NumberOfPlayers;
+        public string GameEngine;
+        public string GameDescription;
         public string VideoFileId;
+        public string ExeFileId;
     }
 }

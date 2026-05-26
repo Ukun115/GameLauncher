@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -38,16 +39,31 @@ namespace Launcher
 
         private async UniTaskVoid LoadAsync()
         {
+            bool notifiedFromCache = false;
+
             // キャッシュがあれば即時反映してUIを素早く表示する
             if (File.Exists(CachePath))
             {
                 TryLoadFromCache();
-                OnLoaded?.Invoke();
+                if (Rows != null)
+                {
+                    notifiedFromCache = true;
+                    OnLoaded?.Invoke();
+                }
             }
 
             // Drive から最新を取得してキャッシュを更新
             var json = await DownloadJsonAsync();
-            if (json == null) return;
+            if (json == null)
+            {
+                // オフライン かつ キャッシュなし（初回）の場合も OnLoaded を発火して UI をブロックしない
+                if (!notifiedFromCache)
+                {
+                    Debug.LogWarning("[MasterDataLoader] オフラインかつキャッシュなし。データなしで起動します。");
+                    OnLoaded?.Invoke();
+                }
+                return;
+            }
 
             File.WriteAllText(CachePath, json);
 
@@ -107,6 +123,7 @@ namespace Launcher
         {
             try
             {
+                json = SanitizeJson(json);
                 var set = JsonUtility.FromJson<StudentProductionRowSet>(json);
                 return set?.rows;
             }
@@ -115,6 +132,20 @@ namespace Launcher
                 Debug.LogError($"[MasterDataLoader] JSONパース失敗: {e.Message}");
                 return null;
             }
+        }
+
+        /// <summary>
+        /// JsonUtility が非対応な書式を除去する
+        /// ・ブロックコメント /* ... */
+        /// ・末尾カンマ（trailing comma）
+        /// </summary>
+        private static string SanitizeJson(string json)
+        {
+            // ブロックコメント除去
+            json = Regex.Replace(json, @"/\*.*?\*/", string.Empty, RegexOptions.Singleline);
+            // trailing comma 除去（, の後に ] か } が続くケース）
+            json = Regex.Replace(json, @",\s*([\]}])", "$1");
+            return json;
         }
     }
 }

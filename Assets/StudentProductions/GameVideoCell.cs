@@ -26,6 +26,14 @@ namespace Launcher
         private int _productionId;
         private string _productionName;
         private string _exeFileId;
+        private string _gameGenre;
+        private string _gameDescription;
+        private string _teamOrSolo;
+        private string _numberOfPlayers;
+        private string _gameEngine;
+        private int _grade;
+        private int _graduationYear;
+        private string _eventType;
 
         public static string VideoCacheDir => Path.Combine(Application.persistentDataPath, "Videos");
         public static string GetCachePath(int productionId) => Path.Combine(VideoCacheDir, $"{productionId:D3}.mp4");
@@ -38,12 +46,20 @@ namespace Launcher
         /// <summary>
         /// セルを初期化する
         /// </summary>
-        public void Initialize(int productionId, string productionName, string studentName, string videoFileId, string exeFileId)
+        public void Initialize(StudentProductionRow row)
         {
-            _productionId = productionId;
-            _productionName = productionName;
-            _exeFileId = exeFileId;
-            _productionAndStudentName.text = $"タイトル：{productionName}　開発者：{studentName}";
+            _productionId    = row.ProductionID;
+            _productionName  = row.GameName;
+            _exeFileId       = row.ExeFileId;
+            _gameGenre       = row.GameGenre;
+            _gameDescription = row.GameDescription;
+            _teamOrSolo      = row.TeamOrSolo;
+            _numberOfPlayers = row.NumberOfPlayers;
+            _gameEngine      = row.GameEngine;
+            _grade           = row.Grade;
+            _graduationYear  = row.GraduationYear;
+            _eventType       = row.EventType;
+            _productionAndStudentName.text = $"タイトル：{row.GameName}　開発者：{row.StudentName}";
             SetupVideo();
         }
 
