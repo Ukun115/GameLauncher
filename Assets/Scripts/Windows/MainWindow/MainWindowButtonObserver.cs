@@ -20,9 +20,6 @@ namespace Launcher
         [Header("ヘルプボタン"), SerializeField]
         private Button _helpButton;
 
-        [Header("設定ボタン"), SerializeField]
-        private Button _settingButton;
-
         [Header("終了ボタン"), SerializeField]
         private Button _exitButton;
 
@@ -56,7 +53,6 @@ namespace Launcher
             _studentProductionsButton.onClick.AddListener(_buttonLisner.OnClickStudentProductionsButton);
             _developInfomationButton.onClick.AddListener(_buttonLisner.OnClickDevelopInfomationButton);
             _helpButton.onClick.AddListener(_buttonLisner.OnHelpButton);
-            _settingButton.onClick.AddListener(_buttonLisner.OnSettingButton);
             _exitButton.onClick.AddListener(_buttonLisner.OnExitButton);
             _explanationLancherButton.onClick.AddListener(_buttonLisner.OnExplanationLancherButton);
             _FAQButton.onClick.AddListener(_buttonLisner.OnFAQButton);

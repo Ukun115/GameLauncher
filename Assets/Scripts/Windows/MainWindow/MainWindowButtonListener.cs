@@ -25,9 +25,6 @@ namespace Launcher
         [Header("カメラマネージャー"), SerializeField]
         private CameraManager _cameraManager;
 
-        [Header("設定ウィンドウオブジェクト"), SerializeField]
-        private GameObject _settingsWindowObj;
-
         [Header("終了ダイアログオブジェクト"), SerializeField]
         private GameObject _exitDialogObj;
 
@@ -46,16 +43,16 @@ namespace Launcher
         private void Init()
         {
             // テーマに応じてカラー設定
-            switch(_theme)
+            switch (_theme)
             {
                 case Theme.Custom1:
-                    SetThemeColors(_themeController.Custom1.Graphic,_themeController.Custom1.Text);
+                    SetThemeColors(_themeController.Custom1.Graphic, _themeController.Custom1.Text);
                     break;
                 case Theme.Custom2:
-                    SetThemeColors(_themeController.Custom2.Graphic,_themeController.Custom2.Text);
+                    SetThemeColors(_themeController.Custom2.Graphic, _themeController.Custom2.Text);
                     break;
                 case Theme.Custom3:
-                    SetThemeColors(_themeController.Custom3.Graphic,_themeController.Custom3.Text);
+                    SetThemeColors(_themeController.Custom3.Graphic, _themeController.Custom3.Text);
                     break;
             }
         }
@@ -73,7 +70,7 @@ namespace Launcher
         /// <summary>
         /// テーマカラー設定
         /// </summary>
-        private void SetThemeColors(Color graphicColor,Color32 textColor)
+        private void SetThemeColors(Color graphicColor, Color32 textColor)
         {
             _themeController.CurrentColor = graphicColor;
             _themeController.TextColor = textColor;
@@ -102,7 +99,7 @@ namespace Launcher
         /// </summary>
         public void OnHelpButton()
         {
-            if(_helpWindowObj.activeSelf)
+            if (_helpWindowObj.activeSelf)
             {
                 return;
             }
@@ -112,21 +109,11 @@ namespace Launcher
         }
 
         /// <summary>
-        /// 設定ボタン押下時
-        /// </summary>
-        public void OnSettingButton()
-        {
-            HiddenAllWindow();
-            _settingsWindowObj.SetActive(true);
-            _cameraManager.MoveToPosition2Task().Forget();
-        }
-
-        /// <summary>
         /// 終了ボタン押下時
         /// </summary>
         public void OnExitButton()
         {
-            if(_exitDialogObj.activeSelf)
+            if (_exitDialogObj.activeSelf)
             {
                 return;
             }
